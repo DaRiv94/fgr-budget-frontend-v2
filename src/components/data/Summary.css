@@ -1,0 +1,13 @@
+
+.noPadding{
+    padding:0px;
+    list-style-type: none;
+}
+
+.center{
+    text-align: center;
+}
+
+.parentSummaryDiv{
+    margin:7px;
+}
