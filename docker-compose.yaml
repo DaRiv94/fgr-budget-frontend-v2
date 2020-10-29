@@ -9,3 +9,5 @@ services:
         volumes:
             - "/app/node_modules"
             - ".:/app"
+        environment: 
+            - CHOKIDAR_USEPOLLING=true
