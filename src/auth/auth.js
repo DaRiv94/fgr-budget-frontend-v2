@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-
-//const baseUrl="http://localhost:4000/";
-const baseUrl="https://fgrbudgetapp.herokuapp.com/"
+//This is the backend url
+const baseUrl="http://localhost:4500/";
+// const baseUrl="https://fgrbudgetapp.herokuapp.com/"
 
 class Auth{
 
@@ -12,7 +12,7 @@ class Auth{
         this.isAuthenticated = false;
     }
 
-    login(password){
+    login(email, password){
         return new Promise(async (resolve,reject)=>{
             try{
                 console.log("in login");
@@ -23,8 +23,9 @@ class Auth{
                     }
                   };
     
-    
-                let response = await axios.post(baseUrl+"auth", {password}, axiosConfig );
+                //This axios call goes to the backend which calls then auth service, 
+                //the auth service responses to thebackend which responss to frontend
+                let response = await axios.post(baseUrl+"auth/login", {email,password}, axiosConfig );
                     
                     sessionStorage.setItem('token', JSON.stringify(response.data.token));
                     this.isAuthenticated = true;

@@ -1,47 +1,51 @@
 import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
-import Auth from "../../auth/auth";
+// import Auth from "../../auth/auth";
+import Register from '../../api/Register';
 
-export class HomePage extends Component {
+export class RegisterPage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             loading: false,
             password: "",
+            password2: "",
             email: "",
             // authenticated: false
             error:"",
             errorA:[]
 
         }
-        this.login = this.login.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.register = this.register.bind(this);
         this.emailOnChange = this.emailOnChange.bind(this);
-        this.logout=this.logout.bind(this);
+        this.passwordOnChange = this.passwordOnChange.bind(this);
+        this.password2OnChange = this.password2OnChange.bind(this);
+
     }
 
-    componentWillMount() {
-        let token = sessionStorage.getItem('token');
-        if (token != null) {
-            Auth.isAuthenticated=true;
-        }
-    }
+    // componentWillMount() {
+    //     let token = sessionStorage.getItem('token');
+    //     if (token != null) {
+    //         Auth.isAuthenticated=true;
+    //     }
+    // }
 
-    async login() {
+    async register() {
 
         try {
             this.setState({
                 loading: true
             });
 
-            let res= await Auth.login(this.state.email,this.state.password);
-            console.log("res:", res);
+            let res= await Register.register(this.state.email,this.state.password,this.state.password2);
+            // console.log("Register res:", res);
             this.setState({
                 error:"",
                 loading: false,
                 // authenticated:Auth.isAuthenticated
             });
+            //ADD LOGIC TO TO REDIRECT TO HOMEPAGE
         } catch (e) {
             console.log(e);
             if(typeof(e.Error)=="string"){
@@ -60,21 +64,21 @@ export class HomePage extends Component {
 
     }
 
-    logout() {
-        Auth.logout();
-        //force update with similated state update
-        this.forceUpdate();
-    }
-
     emailOnChange(e) {
         this.setState({
             email: e.target.value
         })
     }
 
-    onChange(e) {
+    passwordOnChange(e) {
         this.setState({
             password: e.target.value
+        })
+    }
+
+    password2OnChange(e) {
+        this.setState({
+            password2: e.target.value
         })
     }
 
@@ -87,45 +91,32 @@ export class HomePage extends Component {
 
     render() {
 
-        let { email, password,  loading } = this.state
+        let { email, password, password2, loading } = this.state
 
         return (
             <div>
-                <h1>Homepage</h1>
+                <h1>Register</h1>
 
                 {loading && <h2>Loading...</h2>}
 
-                {Auth.isAuthenticated ?
-                    <div>
-                        <NavLink
-                        className="btn btn-primary"
-                        activeClassName="active"
-                        to="/Summary"
-                    >Summary</NavLink>
-                    
-                        <button onClick={this.logout}>logout</button>
-                        <NavLink
-                        className="btn btn-primary"
-                        activeClassName="active"
-                        to="/linkrelink"
-                    >linkrelink</NavLink>
-                    </div>
-                    :
+            
                     <div>
                         <label>Email</label>
                         <input type="text" onKeyPress={this.onKeyPress} onChange={this.emailOnChange} value={email} />
                         <label>Password</label>
-                        <input type="password" onKeyPress={this.onKeyPress} onChange={this.onChange} value={password} />
-                        <button id="AddBtn" onClick={this.login}>Login</button>
+                        <input type="password" onKeyPress={this.onKeyPress} onChange={this.passwordOnChange} value={password} />
+                        <label>Match Password</label>
+                        <input type="password" onKeyPress={this.onKeyPress} onChange={this.password2OnChange} value={password2} />
+                        <button id="AddBtn" onClick={this.register}>Register</button>
                         
                     <NavLink
                     className="btn btn-primary"
                     activeClassName="active"
-                    to="/register"
-                >Register</NavLink>
+                    to="/"
+                >Go Home</NavLink>
 
                     </div>
-                }
+                
                 <h2>Error: {this.state.error}</h2>
                 
 
@@ -135,5 +126,5 @@ export class HomePage extends Component {
     }
 }
 
-export default HomePage
+export default RegisterPage
 

@@ -1,26 +1,27 @@
 /* eslint-disable import/no-named-as-default */
 const axios = require('axios');
 
-//const baseUrl="http://localhost:4000/";
-const baseUrl="https://fgrbudgetapp.herokuapp.com/"
+//This is the backend url
+const baseUrl="http://localhost:4500/";
+// const baseUrl="https://fgrbudgetapp.herokuapp.com/"
 
 class Info{
 
-    static getAllTransactions(){
-        return new Promise(async (resolve,reject)=>{
-            try{
-                let axiosConfig = getAxiosConfig()
+    // static getAllTransactions(){
+    //     return new Promise(async (resolve,reject)=>{
+    //         try{
+    //             let axiosConfig = getAxiosConfig()
 
-                // let response = await axios.get(baseUrl + 'info/transactions', axiosConfig);
-                // if (response.data==null) resolve(null) ;
-                // console.log("response data",response.data);
-                // resolve(response.data);
-                resolve([]);
-            }catch(e){
-                reject(e)
-            }
-        })
-    }
+    //             // let response = await axios.get(baseUrl + 'info/transactions', axiosConfig);
+    //             // if (response.data==null) resolve(null) ;
+    //             // console.log("response data",response.data);
+    //             // resolve(response.data);
+    //             resolve([]);
+    //         }catch(e){
+    //             reject(e)
+    //         }
+    //     })
+    // }
 
 
 
@@ -29,10 +30,10 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                // let response = await axios.get(baseUrl + 'info/monthly-summary?month='+ month, axiosConfig);
-                // if (response.data==null) resolve(null) ;
-                // console.log("response data",response.data);
-                // resolve(response.data);
+                let response = await axios.get(baseUrl + 'info/monthly-summary?month='+ month, axiosConfig);
+                if (response.data==null) resolve(null) ;
+                console.log("response data",response.data);
+                resolve(response.data);
                 resolve([]);
             }catch(e){
                 reject(e)

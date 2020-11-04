@@ -4,6 +4,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import NotFoundPage from './components/common/NotFoundPage';
 import HomePage from './components/home/HomePage';
 import LinkReLinkPage from './components/link/LinkReLinkPage';
+import RegisterPage from './components/register/RegisterPage';
 import Summary from './components/data/Summary';
 import './App.css';
 
@@ -13,6 +14,7 @@ function App() {
       <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/linkrelink" component={LinkReLinkPage} />
+      <Route exact path="/register" component={RegisterPage} />
       <ProtectedRoute exact path="/Summary" component={Summary}/>
       <Route component={NotFoundPage} />
       </Switch>
