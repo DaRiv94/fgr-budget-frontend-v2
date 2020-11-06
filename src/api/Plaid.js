@@ -25,7 +25,7 @@ class Plaid{
         })
     }
 
-    static connectbank(public_token){
+    static connectbank(public_token, metadata){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
@@ -33,7 +33,7 @@ class Plaid{
                 //This axios call goes to the backend which calls then auth service, 
                 //the auth service responses to thebackend which responss to frontend
                 //change this for backend route to just be /register
-                let response = await axios.post(baseUrl + 'plaid/connectbank', {public_token}, axiosConfig);
+                let response = await axios.post(baseUrl + 'plaid/connectbank', {public_token, metadata}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("connectbank response.data: ", response.data)
                 resolve(response.data);

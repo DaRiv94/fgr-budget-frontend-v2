@@ -4,6 +4,7 @@ import Auth from "../../auth/auth";
 import { PlaidLink } from 'react-plaid-link';
 import './LinkReLinkPage.css'
 import Plaid from '../../api/Plaid';
+import Info from '../../api/Info';
 
 export class HomePage extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ export class HomePage extends Component {
             error: "",
             errorA: [],
             link_token:"",
-            user:{}
+            user:{},
+            banks:[]
 
         }
         this.onSuccess = this.onSuccess.bind(this);
@@ -35,7 +37,12 @@ export class HomePage extends Component {
         // use user info to get bank,
         // display banks. where clicking them would be another plaid link to update plaid
         // Will want to add some sort of notice for user if they need to update their Bank/Plaid_Item
+        let banksinfo = await Info.getAllBanks()
 
+        // if (banks==null){
+        //     banks=[]
+        // }
+        
         
         //Make request to backend to get status of accounts.
         //The backend, based on the user will query plaid on each account and see if they need to have their credentials updated
@@ -43,7 +50,17 @@ export class HomePage extends Component {
         let link_token = await Plaid.linktokencreate()
         console.log("LINK_TOKEN: ",link_token)
         this.setState({
-            link_token: link_token
+            link_token: link_token,
+        })
+
+        //Call linktokencreate() with bank access_token in order to  
+        // see https://plaid.com/docs/api/tokens/#linktokencreate
+
+        // console.log("banksinfo.banks: ",banksinfo.banks)
+        this.setState({
+            link_token: link_token,
+            banks:banksinfo.banks,
+            user:banksinfo.user
         })
     }
 
@@ -60,7 +77,7 @@ export class HomePage extends Component {
         // send token to server
         console.log("TOKEN: ", token)
         console.log("Metadata: ", metadata)
-        let bank_data = await Plaid.connectbank(token)
+        let bank_data = await Plaid.connectbank(token, metadata)
         console.log("bank_data: ", bank_data)
         //make axios call to webhook service, That webhook service should take this public token, 
         //make the call to plaid, save the item_id and the access_token and then return a postive confirmation message
@@ -96,7 +113,15 @@ export class HomePage extends Component {
                     activeClassName="active"
                     to="/"
                 >Go Home</NavLink>
-
+                <p>HUmm: </p>
+                {this.state.banks.length ==0 && <p>NO Banks Are currently connected</p>}
+                {this.state.banks.length !=0 && this.state.banks.map((bank)=>{
+                        return <p key={bank.id} >{bank.institution_name}</p> 
+                    })}
+                {/* {this.state.banks && this.state.banks.banks.map((bank)=>{
+                        return <p>{bank.name}</p> 
+                    })} */}
+                
 
             </div>
         )

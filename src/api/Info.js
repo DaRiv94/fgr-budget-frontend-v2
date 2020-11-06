@@ -7,6 +7,21 @@ const baseUrl="http://localhost:4500/";
 
 class Info{
 
+    static getAllBanks(){
+        return new Promise(async (resolve,reject)=>{
+            try{
+                let axiosConfig = getAxiosConfig()
+
+                let response = await axios.get(baseUrl + 'info/banks', axiosConfig);
+                if (response.data==null) resolve(null) ;
+                console.log("response data",response.data);
+                resolve(response.data);
+                // resolve([]);
+            }catch(e){
+                reject(e)
+            }
+        })
+    }
     // static getAllTransactions(){
     //     return new Promise(async (resolve,reject)=>{
     //         try{
