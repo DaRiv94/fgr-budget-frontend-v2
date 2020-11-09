@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#Frontend env Vars (NEVER ADD SECRETS)
+.env
+
 # testing
 /coverage
 

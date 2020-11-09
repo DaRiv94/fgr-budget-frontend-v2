@@ -6,7 +6,7 @@ import './LinkReLinkPage.css'
 import Plaid from '../../api/Plaid';
 import Info from '../../api/Info';
 
-export class HomePage extends Component {
+export class LinkReLinkPage extends Component {
     constructor(props) {
         super(props)
 
@@ -128,5 +128,5 @@ export class HomePage extends Component {
     }
 }
 
-export default HomePage
+export default LinkReLinkPage
 

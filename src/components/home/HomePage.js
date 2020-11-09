@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
+import Info from '../../api/Info';
 
 export class HomePage extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ export class HomePage extends Component {
             email: "",
             // authenticated: false
             error:"",
-            errorA:[]
+            errorA:[],
+            is_sandbox: false,
+            user:{},
 
         }
         this.login = this.login.bind(this);
@@ -21,11 +24,23 @@ export class HomePage extends Component {
         this.logout=this.logout.bind(this);
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         let token = sessionStorage.getItem('token');
         if (token != null) {
             Auth.isAuthenticated=true;
         }
+
+        console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
+        if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+            this.setState({
+                is_sandbox: true
+            });
+        }
+
+        let user = await Info.getUserData()
+        this.setState({
+            user: user
+        });
     }
 
     async login() {
@@ -109,6 +124,11 @@ export class HomePage extends Component {
                         activeClassName="active"
                         to="/linkrelink"
                     >linkrelink</NavLink>
+                    <NavLink
+                        className="btn btn-primary"
+                        activeClassName="active"
+                        to="/budgets"
+                    >budgets</NavLink>
                     </div>
                     :
                     <div>
@@ -127,7 +147,16 @@ export class HomePage extends Component {
                     </div>
                 }
                 <h2>Error: {this.state.error}</h2>
-                
+                {Auth.isAuthenticated && this.state.is_sandbox && 
+                <div>
+                    <h3>Send Sample notification emails</h3>
+                    {!this.state.user.email_verified && <div>
+                        <p>Email must be verified to send emails  </p>
+                        <button>CLick here to resend email confirmation email</button>
+                        </div>}
+                    <button>Send Sample Notification email 1</button>
+                    <button>Send Sample Notification email 2</button>
+                </div> }
 
 
             </div>
