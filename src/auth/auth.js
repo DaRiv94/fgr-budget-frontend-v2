@@ -15,7 +15,7 @@ class Auth{
     login(email, password){
         return new Promise(async (resolve,reject)=>{
             try{
-                console.log("in login");
+                // console.log("in login");
                 let axiosConfig = {
                     headers: {
                         'Content-Type': 'application/json;charset=UTF-8',
@@ -29,7 +29,7 @@ class Auth{
                     
                     sessionStorage.setItem('token', JSON.stringify(response.data.token));
                     this.isAuthenticated = true;
-                    console.log("Authenticated:", this.isAuthenticated)
+                    // console.log("Authenticated:", this.isAuthenticated)
                     resolve({"status":response.status, "data":response.data})
                 
             }catch(e){
@@ -47,7 +47,7 @@ class Auth{
     logout(){
         sessionStorage.removeItem('token');
         this.isAuthenticated = false;
-        console.log("Authenticated:", this.isAuthenticated)
+        // console.log("Authenticated:", this.isAuthenticated)
         
     }
 

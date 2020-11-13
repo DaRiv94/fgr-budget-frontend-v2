@@ -12,11 +12,15 @@ class Plaid{
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
-                
+                let url = baseUrl + 'plaid/linktokencreate'
+                if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+                    url +='?env=sandbox'
+                }
+                console.log("linktokencreate::url", url)
                 //This axios call goes to the backend which calls then auth service, 
                 //the auth service responses to thebackend which responss to frontend
                 //change this for backend route to just be /register
-                let response = await axios.get(baseUrl + 'plaid/linktokencreate', axiosConfig);
+                let response = await axios.get(url, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 resolve(response.data.link_token);
             }catch(e){
@@ -30,10 +34,15 @@ class Plaid{
             try{
                 let axiosConfig = getAxiosConfig()
                 
+                let url = baseUrl + 'plaid/connectbank'
+                if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+                    url +='?env=sandbox'
+                }
+                console.log("connectbank::url", url)
                 //This axios call goes to the backend which calls then auth service, 
                 //the auth service responses to thebackend which responss to frontend
                 //change this for backend route to just be /register
-                let response = await axios.post(baseUrl + 'plaid/connectbank', {public_token, metadata}, axiosConfig);
+                let response = await axios.post(url, {public_token, metadata}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("connectbank response.data: ", response.data)
                 resolve(response.data);

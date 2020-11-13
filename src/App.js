@@ -7,7 +7,8 @@ import LinkReLinkPage from './components/link/LinkReLinkPage';
 import BudgetsPage from './components/budgets/BudgetsPage';
 import RegisterPage from './components/register/RegisterPage';
 import Summary from './components/data/Summary';
-import './App.css';
+import NewTransactionEmailTemplateExample from './components/notificationExamples/NewTransactionEmailTemplateExample';
+// import './App.css';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route exact path="/linkrelink" component={LinkReLinkPage} />
       <Route exact path="/register" component={RegisterPage} />
       <Route exact path="/budgets" component={BudgetsPage} />
+      <Route exact path="/newtransactionemailtemplateexample" component={NewTransactionEmailTemplateExample}/>
       <ProtectedRoute exact path="/Summary" component={Summary}/>
       <Route component={NotFoundPage} />
       </Switch>

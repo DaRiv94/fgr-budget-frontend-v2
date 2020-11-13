@@ -28,19 +28,21 @@ export class HomePage extends Component {
         let token = sessionStorage.getItem('token');
         if (token != null) {
             Auth.isAuthenticated=true;
+
+            let user = await Info.getUserData()
+            this.setState({
+                user: user
+            });
         }
 
-        console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
+        // console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
         if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
             this.setState({
                 is_sandbox: true
             });
         }
 
-        let user = await Info.getUserData()
-        this.setState({
-            user: user
-        });
+        
     }
 
     async login() {
@@ -143,19 +145,19 @@ export class HomePage extends Component {
                     activeClassName="active"
                     to="/register"
                 >Register</NavLink>
-
+                    <h2>Error: {this.state.error}</h2>
                     </div>
                 }
-                <h2>Error: {this.state.error}</h2>
+                
                 {Auth.isAuthenticated && this.state.is_sandbox && 
                 <div>
-                    <h3>Send Sample notification emails</h3>
-                    {!this.state.user.email_verified && <div>
-                        <p>Email must be verified to send emails  </p>
-                        <button>CLick here to resend email confirmation email</button>
-                        </div>}
-                    <button>Send Sample Notification email 1</button>
-                    <button>Send Sample Notification email 2</button>
+
+                        <NavLink
+                    className="btn btn-primary"
+                    activeClassName="active"
+                    to="/newtransactionemailtemplateexample"
+                >See Example of New Transactions Email</NavLink>
+
                 </div> }
 
 
