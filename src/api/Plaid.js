@@ -3,7 +3,8 @@ const axios = require('axios');
 
 //This is the backend url
 // const baseUrl="http://fgr-budget-backend-v2_web_1:4500/";
-const baseUrl="http://localhost:4500/";
+// const baseUrl="http://localhost:4500/";
+const baseUrl=process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
 // const baseUrl="https://fgrbudgetapp.herokuapp.com/"
 
 class Plaid{
