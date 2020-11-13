@@ -6,3 +6,10 @@
     margin-left: 40vw;
     background-color: blue;
 }
+
+.toastHeight{
+    max-height: 100px;
+}
+.toast{
+    color: snow;
+}

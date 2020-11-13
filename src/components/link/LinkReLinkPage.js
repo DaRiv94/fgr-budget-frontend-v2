@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import { PlaidLink } from 'react-plaid-link';
 import './LinkReLinkPage.css'
 import Plaid from '../../api/Plaid';
 import Info from '../../api/Info';
+import Triggerwebhook from '../../api/Triggerwebhook';
 
 export class LinkReLinkPage extends Component {
     constructor(props) {
@@ -16,12 +19,13 @@ export class LinkReLinkPage extends Component {
             // authenticated: false
             error: "",
             errorA: [],
-            link_token:"",
-            user:{},
-            banks:[]
+            link_token: "",
+            user: {},
+            banks: []
 
         }
         this.onSuccess = this.onSuccess.bind(this);
+        this.manuallytriggerwebhook = this.manuallytriggerwebhook.bind(this);
         // this.getLinkToken = this.getLinkToken.bind(this);
         // this.logout=this.logout.bind(this);
     }
@@ -42,13 +46,13 @@ export class LinkReLinkPage extends Component {
         // if (banks==null){
         //     banks=[]
         // }
-        
-        
+
+
         //Make request to backend to get status of accounts.
         //The backend, based on the user will query plaid on each account and see if they need to have their credentials updated
         // if something needs to be updated it will be reflected on this page.
         let link_token = await Plaid.linktokencreate()
-        console.log("LINK_TOKEN: ",link_token)
+        console.log("LINK_TOKEN: ", link_token)
         this.setState({
             link_token: link_token,
         })
@@ -59,8 +63,8 @@ export class LinkReLinkPage extends Component {
         // console.log("banksinfo.banks: ",banksinfo.banks)
         this.setState({
             link_token: link_token,
-            banks:banksinfo.banks,
-            user:banksinfo.user
+            banks: banksinfo.banks,
+            user: banksinfo.user
         })
     }
 
@@ -73,12 +77,38 @@ export class LinkReLinkPage extends Component {
     //     //Make axios call to  backend and backend will get the plaid link token
     //     // return token
     // };
+
+    manuallytriggerwebhook = async (item_id) => {
+        
+
+        let response = await Triggerwebhook.triggerwebhook(item_id);
+        console.log("Clicked manuallytriggerwebhook response:", response);
+        toast.success(response.detail, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
+
     onSuccess = async (token, metadata) => {
         // send token to server
         console.log("TOKEN: ", token)
         console.log("Metadata: ", metadata)
         let bank_data = await Plaid.connectbank(token, metadata)
         console.log("bank_data: ", bank_data)
+        toast.success("Bank Successfully connected!", {
+            position: "top-right",
+            autoClose: 6000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
         //make axios call to webhook service, That webhook service should take this public token, 
         //make the call to plaid, save the item_id and the access_token and then return a postive confirmation message
     };
@@ -88,9 +118,6 @@ export class LinkReLinkPage extends Component {
 
 
     render() {
-
-        // let { password,  loading } = this.state
-
         return (
             <div>
                 <h1>LinkReLinkPage!</h1>
@@ -114,15 +141,20 @@ export class LinkReLinkPage extends Component {
                     to="/"
                 >Go Home</NavLink>
                 <p>HUmm: </p>
-                {this.state.banks.length ==0 && <p>NO Banks Are currently connected</p>}
-                {this.state.banks.length !=0 && this.state.banks.map((bank)=>{
-                        return <p key={bank.id} >{bank.institution_name}</p> 
-                    })}
-                {/* {this.state.banks && this.state.banks.banks.map((bank)=>{
-                        return <p>{bank.name}</p> 
-                    })} */}
-                
-
+                {this.state.banks.length === 0 && <p>NO Banks Are currently connected</p>}
+                {this.state.banks.length !== 0 && this.state.banks.map((bank) => {
+                    return <div key={bank.id}>
+                        <p  >{bank.institution_name}</p>
+                        <button onClick={() => { this.manuallytriggerwebhook(bank.item_id) }}>Get past 10 day transactions</button>
+                    </div>
+                })}
+                <ToastContainer
+                    newestOnTop={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                />
+                <ToastContainer />
             </div>
         )
     }
