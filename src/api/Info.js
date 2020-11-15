@@ -45,9 +45,9 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/budgets', axiosConfig);
+                let response = await axios.get(baseUrl + 'budget', axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);
+                console.log("response data",response.data);  
                 resolve(response.data);
                 // resolve([]);
             }catch(e){

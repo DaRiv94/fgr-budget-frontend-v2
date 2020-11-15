@@ -19,7 +19,8 @@ export class BudgetsPage extends Component {
             link_token:"",
             user:{},
             budgets:[],
-            categories:[]
+            categories:[],
+            budgetObjects:[]
 
 
         }
@@ -36,10 +37,23 @@ export class BudgetsPage extends Component {
 
         let budgetinfo = await Info.getBudgets()
 
+        let budgetObjects = []
+        for(let i=0;i< budgetinfo.budgets.length; i++){
+            for(let j=0;j< budgetinfo.categories.length; j++){
+                if(budgetinfo.categories[j].id == budgetinfo.budgets[i].category_id ){
+                    console.log(`budget ${budgetinfo.budgets[i].id} has category with id ${budgetinfo.categories[j].id} `)
+                    let budget_object = {budget:budgetinfo.budgets[i], category: budgetinfo.categories[j]}
+                    budgetObjects.push(budget_object)
+                }
+            }
+        }
+        // console.log("budgetObjects: ", budgetObjects)
+
         this.setState({
             user:budgetinfo.user,
             budgets: budgetinfo.budgets,
-            categories: budgetinfo.categories
+            categories: budgetinfo.categories,
+            budgetObjects:budgetObjects
         })
     }
 
@@ -56,12 +70,12 @@ export class BudgetsPage extends Component {
                 <h1>Budgets!</h1>
 
                 {this.state.budgets.length == 0 ?
-                <p>No budgets here</p>: this.state.budgets.map((budget)=>{
+                <p>No budgets here</p>: this.state.budgetObjects.map((budgetObject)=>{
                     //WILL WANT TO CREATE A BUDGET COMPONENT AND PAGE IN THE CATEGORIES AND 
-                    return <div key={budget.id}>
-                        <p style={{color: this.state.categories[0].color}} >NAME: {budget.name}</p>
-                        <p>Budget MAX: {budget.budget_max}</p>
-                        <p>Budget Real: {budget.budget_real}</p>
+                    return <div key={budgetObject.budget.id}>
+                        <p style={{color: budgetObject.category.color}} >NAME: {budgetObject.budget.name} ({budgetObject.category.name})</p>
+                        <p>Budget MAX: {budgetObject.budget.budget_max}</p>
+                        <p>Budget Real: {budgetObject.budget.budget_real}</p>
                     </div>
                 })}
 

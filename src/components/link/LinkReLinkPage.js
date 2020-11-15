@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import { PlaidLink } from 'react-plaid-link';
@@ -83,15 +83,15 @@ export class LinkReLinkPage extends Component {
 
         let response = await Triggerwebhook.triggerwebhook(item_id);
         console.log("Clicked manuallytriggerwebhook response:", response);
-        toast.success(response.detail, {
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+        // toast.success(response.detail, {
+        //     position: "top-right",
+        //     autoClose: 4000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     });
     }
 
     onSuccess = async (token, metadata) => {
@@ -100,15 +100,15 @@ export class LinkReLinkPage extends Component {
         console.log("Metadata: ", metadata)
         let bank_data = await Plaid.connectbank(token, metadata)
         console.log("bank_data: ", bank_data)
-        toast.success("Bank Successfully connected!", {
-            position: "top-right",
-            autoClose: 6000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+        // toast.success("Bank Successfully connected!", {
+        //     position: "top-right",
+        //     autoClose: 6000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     });
         //make axios call to webhook service, That webhook service should take this public token, 
         //make the call to plaid, save the item_id and the access_token and then return a postive confirmation message
     };
@@ -148,13 +148,13 @@ export class LinkReLinkPage extends Component {
                         <button onClick={() => { this.manuallytriggerwebhook(bank.item_id) }}>Get past 10 day transactions</button>
                     </div>
                 })}
-                <ToastContainer
+                {/* <ToastContainer
                     newestOnTop={false}
                     rtl={false}
                     pauseOnFocusLoss
                     draggable
                 />
-                <ToastContainer />
+                <ToastContainer /> */}
             </div>
         )
     }
