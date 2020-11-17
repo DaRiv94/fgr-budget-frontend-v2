@@ -84,6 +84,11 @@ export class BudgetsPage extends Component {
                     activeClassName="active"
                     to="/"
                 >Go Home</NavLink>
+                <NavLink
+                    className="btn btn-primary"
+                    activeClassName="active"
+                    to="/category/create"
+                >New Category</NavLink>
 
 
 
