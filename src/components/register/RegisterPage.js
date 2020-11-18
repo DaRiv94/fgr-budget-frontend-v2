@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
-// import Auth from "../../auth/auth";
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import Toasts from '../common/Toasts'
+import {Redirect} from 'react-router-dom'
 import Register from '../../api/Register';
+import Toast from '../common/Toasts';
 
 export class RegisterPage extends Component {
     constructor(props) {
@@ -12,10 +16,7 @@ export class RegisterPage extends Component {
             password: "",
             password2: "",
             email: "",
-            // authenticated: false
-            error:"",
-            errorA:[]
-
+            registeredUser:false,
         }
         this.register = this.register.bind(this);
         this.emailOnChange = this.emailOnChange.bind(this);
@@ -24,12 +25,6 @@ export class RegisterPage extends Component {
 
     }
 
-    // componentWillMount() {
-    //     let token = sessionStorage.getItem('token');
-    //     if (token != null) {
-    //         Auth.isAuthenticated=true;
-    //     }
-    // }
 
     async register() {
 
@@ -38,24 +33,28 @@ export class RegisterPage extends Component {
                 loading: true
             });
 
-            let res= await Register.register(this.state.email,this.state.password,this.state.password2);
-            // console.log("Register res:", res);
+            //should return response.newUser 
+            await Register.register(this.state.email,this.state.password,this.state.password2);
+
+            Toasts.success("Successfully Registered User!")
+            
             this.setState({
-                error:"",
                 loading: false,
-                // authenticated:Auth.isAuthenticated
+                registeredUser: true
             });
-            //ADD LOGIC TO TO REDIRECT TO HOMEPAGE
+
         } catch (e) {
-            console.log(e);
+            console.log("e: ",e)
             if(typeof(e.Error)=="string"){
+                Toast.error(e.Error)
+ 
                 this.setState({
-                    error:e.Error,
                     loading: false
                 });
             }else{
+                Toast.error(JSON.stringify(e))
+
                 this.setState({
-                    error:JSON.stringify(e),
                     loading: false
                 });
             }
@@ -91,40 +90,46 @@ export class RegisterPage extends Component {
 
     render() {
 
-        let { email, password, password2, loading } = this.state
+        let { registeredUser, email, password, password2, loading } = this.state
+        if(registeredUser){
+            return <Redirect 
+            to="/"
+            />
+            // return <Redirect 
+            // to={{
+            //     pathname: "/",
+            //     state: { toast: {type:"success",message:"Successfully Registered User!"}}
+            //   }}
+            // />
+        }else{
+            return (
+                <div>
+                    <h1>Register</h1>
 
-        return (
-            <div>
-                <h1>Register</h1>
+                    {loading && <h2>Loading...</h2>}
+                        <div>
+                            <label>Email</label>
+                            <input type="text" onKeyPress={this.onKeyPress} onChange={this.emailOnChange} value={email} />
+                            <label>Password</label>
+                            <input type="password" onKeyPress={this.onKeyPress} onChange={this.passwordOnChange} value={password} />
+                            <label>Match Password</label>
+                            <input type="password" onKeyPress={this.onKeyPress} onChange={this.password2OnChange} value={password2} />
+                            <button id="AddBtn" onClick={this.register}>Register</button>
+                            
+                        <NavLink
+                        className="btn btn-primary"
+                        activeClassName="active"
+                        to="/"
+                        >Go Home</NavLink>
 
-                {loading && <h2>Loading...</h2>}
-
-            
-                    <div>
-                        <label>Email</label>
-                        <input type="text" onKeyPress={this.onKeyPress} onChange={this.emailOnChange} value={email} />
-                        <label>Password</label>
-                        <input type="password" onKeyPress={this.onKeyPress} onChange={this.passwordOnChange} value={password} />
-                        <label>Match Password</label>
-                        <input type="password" onKeyPress={this.onKeyPress} onChange={this.password2OnChange} value={password2} />
-                        <button id="AddBtn" onClick={this.register}>Register</button>
-                        
-                    <NavLink
-                    className="btn btn-primary"
-                    activeClassName="active"
-                    to="/"
-                >Go Home</NavLink>
-
-                    </div>
-                
-                <h2>Error: {this.state.error}</h2>
-                
-
-
-            </div>
-        )
+                        </div>
+                </div>
+            )
+        }
     }
 }
+
+
 
 export default RegisterPage
 

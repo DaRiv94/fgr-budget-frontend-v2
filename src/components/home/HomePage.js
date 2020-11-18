@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import Info from '../../api/Info';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import Toasts from '../common/Toasts'
 
 export class HomePage extends Component {
     constructor(props) {
@@ -11,23 +14,21 @@ export class HomePage extends Component {
             loading: false,
             password: "",
             email: "",
-            // authenticated: false
-            error:"",
-            errorA:[],
             is_sandbox: false,
-            user:{},
+            user: {},
+            had_notification: false
 
         }
         this.login = this.login.bind(this);
         this.onChange = this.onChange.bind(this);
         this.emailOnChange = this.emailOnChange.bind(this);
-        this.logout=this.logout.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     async componentWillMount() {
         let token = sessionStorage.getItem('token');
         if (token != null) {
-            Auth.isAuthenticated=true;
+            Auth.isAuthenticated = true;
 
             let user = await Info.getUserData()
             this.setState({
@@ -36,14 +37,58 @@ export class HomePage extends Component {
         }
 
         // console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
-        if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+        if (process.env.REACT_APP_PROJECT_ENV == 'sandbox') {
             this.setState({
                 is_sandbox: true
             });
         }
 
-        
+        // console.log("Component will mount")
+        // if(this.props.location.state){
+        //     console.log("toast: ",this.props.location.state.toast);
+        //     if(this.props.location.state.toast.type == "success"){
+        //         console.log("Toasting to success!: ", this.props.location.state.toast.message)
+        //         this.setState({
+        //             had_notification:true
+        //         })
+        //         toast.success(this.props.location.state.toast.message, {
+        //             position: "top-right",
+        //             autoClose: 4000,
+        //             hideProgressBar: false,
+        //             closeOnClick: true,
+        //             pauseOnHover: true,
+        //             draggable: true,
+        //             progress: undefined
+        //             });
+
+        //     }
+
+        // }else{
+        //     console.log("nothing to do here")
+        // }
     }
+
+    // componentDidMount(props){
+    //     console.log("Component did mount")
+    //     if(this.props.location.state){
+    //         console.log("toast: ",this.props.location.state.toast);
+    //         if(this.props.location.state.toast.type == "success"){
+    //             toast.success(this.props.location.state.toast.message, {
+    //                 position: "top-right",
+    //                 autoClose: 4000,
+    //                 hideProgressBar: false,
+    //                 closeOnClick: true,
+    //                 pauseOnHover: true,
+    //                 draggable: true,
+    //                 progress: undefined
+    //                 });
+    //         }
+
+    //     }else{
+    //         console.log("nothing to do here")
+    //     }
+
+    // }
 
     async login() {
 
@@ -52,27 +97,30 @@ export class HomePage extends Component {
                 loading: true
             });
 
-            let res= await Auth.login(this.state.email,this.state.password);
+            let res = await Auth.login(this.state.email, this.state.password);
             console.log("res:", res);
             this.setState({
-                error:"",
                 loading: false,
                 // authenticated:Auth.isAuthenticated
             });
         } catch (e) {
-            console.log(e);
-            if(typeof(e.Error)=="string"){
+            if (typeof (e.Error) == "string") {
+                console.log("typeof(e.Error)=='string'")
+                Toasts.error(e.Error)
                 this.setState({
-                    error:e.Error,
                     loading: false
                 });
-            }else{
+            } else {
+                if (e.Error.detail) {
+                    Toasts.error(e.Error.detail)
+                } else {
+                    Toasts.error(JSON.stringify(e))
+                }
+
                 this.setState({
-                    error:JSON.stringify(e),
                     loading: false
                 });
             }
-            
         }
 
     }
@@ -95,8 +143,8 @@ export class HomePage extends Component {
         })
     }
 
-    onKeyPress(e){
-        if(e.key === 'Enter'){
+    onKeyPress(e) {
+        if (e.key === 'Enter') {
             document.getElementById("AddBtn").click();
         }
     }
@@ -104,7 +152,7 @@ export class HomePage extends Component {
 
     render() {
 
-        let { email, password,  loading } = this.state
+        let { email, password, loading } = this.state
 
         return (
             <div>
@@ -115,22 +163,22 @@ export class HomePage extends Component {
                 {Auth.isAuthenticated ?
                     <div>
                         <NavLink
-                        className="btn btn-primary"
-                        activeClassName="active"
-                        to="/Summary"
-                    >Summary</NavLink>
-                    
+                            className="btn btn-primary"
+                            activeClassName="active"
+                            to="/Summary"
+                        >Summary</NavLink>
+
                         <button onClick={this.logout}>logout</button>
                         <NavLink
-                        className="btn btn-primary"
-                        activeClassName="active"
-                        to="/linkrelink"
-                    >linkrelink</NavLink>
-                    <NavLink
-                        className="btn btn-primary"
-                        activeClassName="active"
-                        to="/budgets"
-                    >budgets</NavLink>
+                            className="btn btn-primary"
+                            activeClassName="active"
+                            to="/linkrelink"
+                        >linkrelink</NavLink>
+                        <NavLink
+                            className="btn btn-primary"
+                            activeClassName="active"
+                            to="/budgets"
+                        >budgets</NavLink>
                     </div>
                     :
                     <div>
@@ -139,32 +187,48 @@ export class HomePage extends Component {
                         <label>Password</label>
                         <input type="password" onKeyPress={this.onKeyPress} onChange={this.onChange} value={password} />
                         <button id="AddBtn" onClick={this.login}>Login</button>
-                        
-                    <NavLink
-                    className="btn btn-primary"
-                    activeClassName="active"
-                    to="/register"
-                >Register</NavLink>
-                    <h2>Error: {this.state.error}</h2>
-                    </div>
-                }
-                
-                {Auth.isAuthenticated && this.state.is_sandbox && 
-                <div>
 
                         <NavLink
-                    className="btn btn-primary"
-                    activeClassName="active"
-                    to="/newtransactionemailtemplateexample"
-                >See Example of New Transactions Email</NavLink>
+                            className="btn btn-primary"
+                            activeClassName="active"
+                            to="/register"
+                        >Register</NavLink>
+                    </div>
+                }
 
-                </div> }
+                {Auth.isAuthenticated && this.state.is_sandbox &&
+                    <div>
 
+                        <NavLink
+                            className="btn btn-primary"
+                            activeClassName="active"
+                            to="/newtransactionemailtemplateexample"
+                        >See Example of New Transactions Email</NavLink>
 
+                    </div>}
+
+                {/* <ToastContainer
+                        newestOnTop={false}
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                    /> */}
             </div>
         )
     }
 }
+
+// function toasterror(message){
+//     toast.error(message, {
+//         position: "top-right",
+//         autoClose: 4000,
+//         hideProgressBar: false,
+//         closeOnClick: true,
+//         pauseOnHover: true,
+//         draggable: true,
+//         progress: undefined,
+//     });
+// }
 
 export default HomePage
 

@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import Info from '../../api/Info';
 import Categories from '../../api/Categories';
+import {Redirect} from 'react-router-dom'
 
 export class CategoryForm extends Component {
     constructor(props) {
@@ -21,7 +22,8 @@ export class CategoryForm extends Component {
             is_sandbox: false,
             user:{},
             colors:["blue","purple"],
-            selected_category_id:""
+            selected_category_id:"",
+            invalid_category:false
 
         }
         this.category_name_onChange = this.category_name_onChange.bind(this);
@@ -32,6 +34,20 @@ export class CategoryForm extends Component {
         let token = sessionStorage.getItem('token');
         if (token != null) {
             Auth.isAuthenticated=true;
+
+            if(this.props.match.params.id){
+                console.log("will edit")
+
+                let categoryToEdit = await Categories.GetACategory(this.props.match.params.id)
+
+                this.setState({
+                    category_name:categoryToEdit.name,
+                    category_color:categoryToEdit.color,
+                })
+
+            }else{
+                console.log("Will Create")
+            }
 
             let user = await Info.getUserData()
             this.setState({
@@ -99,37 +115,43 @@ export class CategoryForm extends Component {
     render() {
 
         let { category_name, category_color,  loading } = this.state
-
-        return (
-            <div>
-                <h1>CategoryForm</h1>
-
-                {loading && <h2>Loading...</h2>}
-                    <div>
-                        <label>Category name</label>
-                        <input type="text" onKeyPress={this.onKeyPress} onChange={this.category_name_onChange} value={category_name} />
-
-                        <label>Color</label>                       
-                        <div className="tagSelectDiv">
-                        <select name="select_tag" onChange={this.category_color_onChange} value={category_color}>
-                            <option value="black">black</option>
-                            {this.state.colors.map(color => {
-                                return <option key={color} style={{color:color}}  value={color}>{color}</option>
-                            })}
-
-                        </select>
-                        <button onClick={this.addTag}>Add Tag</button>
+        if(this.state.invalid_category){
+            return <Redirect 
+            to="/"
+            />
+        }else{
+            return (
+                <div>
+                    <h1>CategoryForm</h1>
+    
+                    {loading && <h2>Loading...</h2>}
+                        <div>
+                            <label>Category name</label>
+                            <input type="text" onKeyPress={this.onKeyPress} onChange={this.category_name_onChange} value={category_name} />
+    
+                            <label>Color</label>                       
+                            <div className="tagSelectDiv">
+                            <select name="select_tag" onChange={this.category_color_onChange} value={category_color}>
+                                <option value="black">black</option>
+                                {this.state.colors.map(color => {
+                                    return <option key={color} style={{color:color}}  value={color}>{color}</option>
+                                })}
+    
+                            </select>
+                            <button onClick={this.addTag}>Add Tag</button>
+                            </div>
+                            <button id="AddBtn" onClick={this.createCategory}>Create</button>
+                            
+                        <NavLink
+                        className="btn btn-primary"
+                        activeClassName="active"
+                        to="/budgets"
+                        >Back to budgets</NavLink>
                         </div>
-                        <button id="AddBtn" onClick={this.createCategory}>Create</button>
-                        
-                    <NavLink
-                    className="btn btn-primary"
-                    activeClassName="active"
-                    to="/budgets"
-                    >Back to budgets</NavLink>
-                    </div>
-            </div>
-        )
+                </div>
+            )
+        }
+       
     }
 }
 

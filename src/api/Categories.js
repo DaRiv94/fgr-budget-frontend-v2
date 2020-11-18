@@ -1,95 +1,69 @@
 /* eslint-disable import/no-named-as-default */
 const axios = require('axios');
-
-//This is the backend url
-// const baseUrl="http://localhost:4500/";
 const baseUrl=process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
-// const baseUrl="https://fgrbudgetapp.herokuapp.com/"
 
-class Info{
 
-    static getUserData(){
+class Categories{
+
+    static getAllCategories(){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/user', axiosConfig);
+                let response = await axios.get(baseUrl + 'category/', axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("getUserData response data",response.data);
+                console.log("getAllCategories response data",response.data);
                 resolve(response.data);
-                // resolve([]);
             }catch(e){
                 reject(e)
             }
         })
     }
 
-    static getAllBanks(){
+    static CreateACategory(name,color){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/banks', axiosConfig);
+                let response = await axios.post(baseUrl + 'category/', {name,color}, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);
+                console.log("CreateACategory response data",response.data);
                 resolve(response.data);
-                // resolve([]);
             }catch(e){
                 reject(e)
             }
         })
     }
 
-    static getBudgets(){
+    static GetACategory(id){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'budget', axiosConfig);
+                let response = await axios.get(baseUrl + 'category/' + id, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);  
+                console.log("GetACategory response data",response.data);
                 resolve(response.data);
-                // resolve([]);
             }catch(e){
                 reject(e)
             }
         })
     }
 
-    // static getAllTransactions(){
-    //     return new Promise(async (resolve,reject)=>{
-    //         try{
-    //             let axiosConfig = getAxiosConfig()
-
-    //             // let response = await axios.get(baseUrl + 'info/transactions', axiosConfig);
-    //             // if (response.data==null) resolve(null) ;
-    //             // console.log("response data",response.data);
-    //             // resolve(response.data);
-    //             resolve([]);
-    //         }catch(e){
-    //             reject(e)
-    //         }
-    //     })
-    // }
-
-
-
-    static getSummary(month=null){
+    static EditACategory(id,name,color){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/monthly-summary?month='+ month, axiosConfig);
+                let response = await axios.post(baseUrl + 'category/' + id, {name,color}, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);
+                console.log("EditACategory response data",response.data);
                 resolve(response.data);
-                resolve([]);
             }catch(e){
                 reject(e)
             }
         })
     }
-
 }
 
 function getAxiosConfig(){
@@ -106,4 +80,4 @@ function getAxiosConfig(){
         return axiosConfig;
 }
 
-export default Info;
+export default Categories;
