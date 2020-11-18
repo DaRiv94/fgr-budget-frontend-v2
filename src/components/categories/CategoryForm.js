@@ -10,6 +10,7 @@ import Auth from "../../auth/auth";
 import Info from '../../api/Info';
 import Categories from '../../api/Categories';
 import {Redirect} from 'react-router-dom'
+import Toasts from '../common/Toasts'
 
 export class CategoryForm extends Component {
     constructor(props) {
@@ -22,12 +23,13 @@ export class CategoryForm extends Component {
             is_sandbox: false,
             user:{},
             colors:["blue","purple"],
-            selected_category_id:"",
-            invalid_category:false
+            edit_mode:false,
+            redirect:false
 
         }
         this.category_name_onChange = this.category_name_onChange.bind(this);
         this.category_color_onChange = this.category_color_onChange.bind(this);
+        this.createOrEditCategory = this.createOrEditCategory.bind(this);
     }
 
     async componentWillMount() {
@@ -43,6 +45,7 @@ export class CategoryForm extends Component {
                 this.setState({
                     category_name:categoryToEdit.name,
                     category_color:categoryToEdit.color,
+                    edit_mode:true
                 })
 
             }else{
@@ -63,35 +66,36 @@ export class CategoryForm extends Component {
         }
     }
 
-    async login() {
-
+    async createOrEditCategory() {
         try {
             this.setState({
                 loading: true
             });
-
-            let res= await Categories.CreateACategory(this.state.category_name,this.state.category_color);
-            console.log("==res: ", res);
+            let response
+            if(this.state.edit_mode){
+                response = await Categories.EditACategory(this.props.match.params.id, this.state.category_name,this.state.category_color);
+                // console.log("==response: ", response);
+                Toasts.success("Successfully edited a category")
+            }else{
+                response = await Categories.CreateACategory(this.state.category_name,this.state.category_color);
+                // console.log("==response: ", response);
+                Toasts.success("Successfully created a category")
+            }
             this.setState({
                 error:"",
                 loading: false,
+                redirect:true
             });
         } catch (e) {
-            console.log(e);
             if(typeof(e.Error)=="string"){
-                this.setState({
-                    error:e.Error,
-                    loading: false
-                });
+                Toasts.error(e.Error)
             }else{
-                this.setState({
-                    error:JSON.stringify(e),
-                    loading: false
-                });
+                Toasts.error(JSON.stringify(e))
             }
-            
+            this.setState({
+                loading: false
+            });
         }
-
     }
 
     category_name_onChange(e) {
@@ -115,9 +119,9 @@ export class CategoryForm extends Component {
     render() {
 
         let { category_name, category_color,  loading } = this.state
-        if(this.state.invalid_category){
+        if(this.state.redirect ){
             return <Redirect 
-            to="/"
+            to="/budgets"
             />
         }else{
             return (
@@ -138,9 +142,8 @@ export class CategoryForm extends Component {
                                 })}
     
                             </select>
-                            <button onClick={this.addTag}>Add Tag</button>
                             </div>
-                            <button id="AddBtn" onClick={this.createCategory}>Create</button>
+                            <button id="AddBtn" onClick={this.createOrEditCategory}>{this.state.edit_mode ? "Edit" : "Create"}</button>
                             
                         <NavLink
                         className="btn btn-primary"

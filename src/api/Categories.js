@@ -55,7 +55,7 @@ class Categories{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.post(baseUrl + 'category/' + id, {name,color}, axiosConfig);
+                let response = await axios.patch(baseUrl + 'category/' + id, {name,color}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("EditACategory response data",response.data);
                 resolve(response.data);

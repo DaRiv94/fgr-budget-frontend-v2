@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import Toasts from '../common/Toasts'
 import {Redirect} from 'react-router-dom'
 import Register from '../../api/Register';
-import Toast from '../common/Toasts';
 
 export class RegisterPage extends Component {
     constructor(props) {
@@ -46,13 +43,13 @@ export class RegisterPage extends Component {
         } catch (e) {
             console.log("e: ",e)
             if(typeof(e.Error)=="string"){
-                Toast.error(e.Error)
+                Toasts.error(e.Error)
  
                 this.setState({
                     loading: false
                 });
             }else{
-                Toast.error(JSON.stringify(e))
+                Toasts.error(JSON.stringify(e))
 
                 this.setState({
                     loading: false
