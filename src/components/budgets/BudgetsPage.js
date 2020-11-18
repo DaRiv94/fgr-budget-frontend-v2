@@ -115,7 +115,12 @@ export class BudgetsPage extends Component {
                     activeClassName="active"
                     to={"/category/edit/" + this.state.category_id_for_edit}
                 >Edit Category</NavLink>
-                {/* <button id="AddBtn" onClick={this.createOrEditCategory}>Edit Category</button> */}
+                <NavLink
+                    className="btn btn-primary"
+                    activeClassName="active"
+                    to="/category/assign-to-transaction"
+                >Assign Categories to Transactions</NavLink>
+                
 
 
 

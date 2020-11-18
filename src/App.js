@@ -7,6 +7,7 @@ import LinkReLinkPage from './components/link/LinkReLinkPage';
 import BudgetsPage from './components/budgets/BudgetsPage';
 import BudgetForm from './components/budgets/BudgetForm';
 import CategoryForm from './components/categories/CategoryForm';
+import CategoryAssignToTransactions from './components/categories/CategoryAssignToTransactions';
 import RegisterPage from './components/register/RegisterPage';
 import Summary from './components/data/Summary';
 import NewTransactionEmailTemplateExample from './components/notificationExamples/NewTransactionEmailTemplateExample';
@@ -26,6 +27,7 @@ function App() {
       <ProtectedRoute exact path="/budgets/edit/:id" component={BudgetForm} />
       <ProtectedRoute exact path="/category/create" component={CategoryForm} />
       <ProtectedRoute exact path="/category/edit/:id" component={CategoryForm} />
+      <ProtectedRoute exact path="/category/assign-to-transaction" component={CategoryAssignToTransactions} />
       <ProtectedRoute exact path="/newtransactionemailtemplateexample" component={NewTransactionEmailTemplateExample}/>
       <ProtectedRoute exact path="/Summary" component={Summary}/>
       <Route component={NotFoundPage} />

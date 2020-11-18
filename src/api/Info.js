@@ -56,21 +56,21 @@ class Info{
         })
     }
 
-    // static getAllTransactions(){
-    //     return new Promise(async (resolve,reject)=>{
-    //         try{
-    //             let axiosConfig = getAxiosConfig()
+    static getAllTransactions(){
+        return new Promise(async (resolve,reject)=>{
+            try{
+                let axiosConfig = getAxiosConfig()
 
-    //             // let response = await axios.get(baseUrl + 'info/transactions', axiosConfig);
-    //             // if (response.data==null) resolve(null) ;
-    //             // console.log("response data",response.data);
-    //             // resolve(response.data);
-    //             resolve([]);
-    //         }catch(e){
-    //             reject(e)
-    //         }
-    //     })
-    // }
+                let response = await axios.get(baseUrl + 'info/transactions', axiosConfig);
+                if (response.data==null) resolve(null) ;
+                console.log("response data",response.data);
+                resolve(response.data);
+                resolve([]);
+            }catch(e){
+                reject(e)
+            }
+        })
+    }
 
 
 
