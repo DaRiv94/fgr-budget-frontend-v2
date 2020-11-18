@@ -20,9 +20,7 @@ export class CategoryForm extends Component {
             loading: false,
             category_name:"",
             category_color:"black",
-            is_sandbox: false,
-            user:{},
-            colors:["blue","purple"],
+            colors:["gray","red","orange","green","cyan","blue","magenta","purple"], //black is included as the default
             edit_mode:false,
             redirect:false
 
@@ -36,33 +34,28 @@ export class CategoryForm extends Component {
         let token = sessionStorage.getItem('token');
         if (token != null) {
             Auth.isAuthenticated=true;
-
+            let categoryToEdit ={}
             if(this.props.match.params.id){
                 console.log("will edit")
-
-                let categoryToEdit = await Categories.GetACategory(this.props.match.params.id)
-
-                this.setState({
-                    category_name:categoryToEdit.name,
-                    category_color:categoryToEdit.color,
-                    edit_mode:true
-                })
-
+                try{
+                    categoryToEdit = await Categories.GetACategory(this.props.match.params.id)
+                
+                    this.setState({
+                        category_name:categoryToEdit.name,
+                        category_color:categoryToEdit.color,
+                        edit_mode:true
+                    })
+                } catch (e) {
+                    console.log("e:", e)
+                    Toasts.error("Could Not Edit Category")
+                    this.setState({
+                        loading: false,
+                        redirect: true
+                    });
+                }
             }else{
                 console.log("Will Create")
             }
-
-            let user = await Info.getUserData()
-            this.setState({
-                user: user
-            });
-        }
-
-        // console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
-        if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
-            this.setState({
-                is_sandbox: true
-            });
         }
     }
 
