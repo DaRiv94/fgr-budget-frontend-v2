@@ -53,10 +53,41 @@ class Auth{
     }
 
     isAuthenticated(){
+        
+            // return new Promise(async (resolve,reject)=>{
+            //     try{
+            //         let axiosConfig = getAxiosConfig()
+    
+            //         let response = await axios.get(baseUrl + 'info/user', axiosConfig);
+            //         if (response.data==null) resolve(null) ;
+            //         console.log("getUserData response data",response.data);
+            //         if(response.status=='200'){
+            //             resolve(true)
+            //         }else{
+            //             resolve(false)
+            //         }
+            //     }catch(e){
+            //         console.log("isAuthenticated: e", e)
+            //         reject(e)
+            //     }
+            // })
+        
         return this.isAuthenticated;
     }
-
 }
 
+// function getAxiosConfig(){
+//     let jwtStringToken = sessionStorage.getItem('token');
+//         let token = JSON.parse(jwtStringToken);
+
+//         let axiosConfig = {
+//             headers: {
+//                 'Content-Type': 'application/json;charset=UTF-8',
+//                 "Access-Control-Allow-Origin": "*",
+//                 "x-auth-token":token
+//             }
+//         };
+//         return axiosConfig;
+// }
 
 export default new Auth();

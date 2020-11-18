@@ -23,6 +23,7 @@ function App() {
       <ProtectedRoute exact path="/linkrelink" component={LinkReLinkPage} />
       <ProtectedRoute exact path="/budgets" component={BudgetsPage} />
       <ProtectedRoute exact path="/budgets/create" component={BudgetForm} />
+      <ProtectedRoute exact path="/budgets/edit/:id" component={BudgetForm} />
       <ProtectedRoute exact path="/category/create" component={CategoryForm} />
       <ProtectedRoute exact path="/category/edit/:id" component={CategoryForm} />
       <ProtectedRoute exact path="/newtransactionemailtemplateexample" component={NewTransactionEmailTemplateExample}/>

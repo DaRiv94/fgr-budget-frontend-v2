@@ -8,7 +8,9 @@ import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import Info from '../../api/Info';
+import Budgets from '../../api/Budgets';
 import Categories from '../../api/Categories';
+import Toasts from '../common/Toasts'
 
 export class BudgetForm extends Component {
     constructor(props) {
@@ -20,22 +22,52 @@ export class BudgetForm extends Component {
             budget_max:"",
             budget_real:"",
             budget_category_id:"",
-            is_sandbox: false,
             user:{},
             categories:[],
-            selected_category_id:""
+            selected_category_id:"",
+            edit_mode:false
 
         }
         this.budget_name_onChange = this.budget_name_onChange.bind(this);
         this.budget_max_onChange = this.budget_max_onChange.bind(this);
         this.budget_real_onChange = this.budget_real_onChange.bind(this);
         this.budget_category_id_onChange = this.budget_category_id_onChange.bind(this);
+        this.createOrEditBudget = this.createOrEditBudget.bind(this)
     }
 
     async componentWillMount() {
         let token = sessionStorage.getItem('token');
         if (token != null) {
             Auth.isAuthenticated=true;
+
+            let BudgetToEdit ={}
+            if(this.props.match.params.id){
+                console.log("will edit")
+                try{
+                    BudgetToEdit = await Budgets.GetABudget(this.props.match.params.id)
+                    console.log("BudgetToEdit:", BudgetToEdit)
+                    console.log("BudgetToEdit.name:", BudgetToEdit.budget.name)
+                    console.log("BudgetToEdit.budget_max:", BudgetToEdit.budget.budget_max)
+                    console.log("BudgetToEdit.budget_real:", BudgetToEdit.budget.budget_real)
+                    console.log("BudgetToEdit.category_id:", BudgetToEdit.budget.category_id)
+                    this.setState({
+                        budget_name:BudgetToEdit.budget.name,
+                        budget_max:BudgetToEdit.budget.budget_max,
+                        budget_real:BudgetToEdit.budget.budget_real,
+                        budget_category_id:BudgetToEdit.budget.category_id,
+                        edit_mode:true
+                    })
+                } catch (e) {
+                    console.log("e:", e)
+                    Toasts.error("Could Not Edit Budget")
+                    this.setState({
+                        loading: false,
+                        redirect: true
+                    });
+                }
+            }else{
+                console.log("Will Create")
+            }
 
             let user = await Info.getUserData()
             let categories = await Categories.getAllCategories()
@@ -45,49 +77,42 @@ export class BudgetForm extends Component {
                 categories:categories.categories
             });
 
-            
-
         }
+    }
 
-        // console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
-        if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+    async createOrEditBudget() {
+        try {
             this.setState({
-                is_sandbox: true
+                loading: true
+            });
+            let response
+            if(this.state.edit_mode){
+                response = await Budgets.EditABudget(this.props.match.params.id, 
+                    this.state.budget_name,this.state.budget_max,this.state.budget_real,this.state.budget_category_id);
+                // console.log("==response: ", response);
+                Toasts.success("Successfully edited budget")
+            }else{
+                response = await Budgets.CreateABudget(this.state.budget_name,this.state.budget_max,this.state.budget_real,this.state.budget_category_id);
+                // console.log("==response: ", response);
+                Toasts.success("Successfully created a budget")
+            }
+            this.setState({
+                error:"",
+                loading: false,
+                redirect:true
+            });
+        } catch (e) {
+            if(typeof(e.Error)=="string"){
+                Toasts.error(e.Error)
+            }else{
+                Toasts.error(JSON.stringify(e))
+            }
+            this.setState({
+                loading: false
             });
         }
     }
 
-    // async login() {
-
-    //     try {
-    //         this.setState({
-    //             loading: true
-    //         });
-
-    //         let res= await Auth.login(this.state.email,this.state.password);
-    //         console.log("res:", res);
-    //         this.setState({
-    //             error:"",
-    //             loading: false,
-    //             // authenticated:Auth.isAuthenticated
-    //         });
-    //     } catch (e) {
-    //         console.log(e);
-    //         if(typeof(e.Error)=="string"){
-    //             this.setState({
-    //                 error:e.Error,
-    //                 loading: false
-    //             });
-    //         }else{
-    //             this.setState({
-    //                 error:JSON.stringify(e),
-    //                 loading: false
-    //             });
-    //         }
-            
-    //     }
-
-    // }
 
     budget_name_onChange(e) {
         this.setState({
@@ -138,23 +163,21 @@ export class BudgetForm extends Component {
                         
                         <label>Category</label>                       
                         <div className="tagSelectDiv">
-                        <select name="select_tag" onChange={this.budget_category_id_onChange} value={this.state.budget_category_id}>
+                        <select name="select_tag" onChange={this.budget_category_id_onChange} value={budget_category_id}>
                             <option value="">None</option>
                             {this.state.categories.map(category => {
-                                return <option key={category.id} value={category.id}>{category.name}</option>
+                                return <option key={category.id} style={{ color: category.color }} value={category.id}>{category.name}</option>
                             })}
 
                         </select>
-                        <button onClick={this.addTag}>Add Tag</button>
                         </div>
-                        <button id="AddBtn" onClick={this.login}>Login</button>
+                        <button id="AddBtn" onClick={this.createOrEditBudget}>{this.state.edit_mode ? "Edit" : "Create"}</button>
                         
                     <NavLink
                     className="btn btn-primary"
                     activeClassName="active"
-                    to="/register"
-                    >Register</NavLink>
-                    <h2>Error: {this.state.error}</h2>
+                    to="/budgets"
+                    >Back To Budgets</NavLink>
                     </div>
             </div>
         )

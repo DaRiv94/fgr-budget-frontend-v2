@@ -74,7 +74,11 @@ export class BudgetsPage extends Component {
                     <p>No budgets here</p> : this.state.budgetObjects.map((budgetObject) => {
                         //WILL WANT TO CREATE A BUDGET COMPONENT AND PAGE IN THE CATEGORIES AND 
                         return <div key={budgetObject.budget.id}>
-                            <p style={{ color: budgetObject.category.color }} >NAME: {budgetObject.budget.name} ({budgetObject.category.name})</p>
+                            <p style={{ color: budgetObject.category.color }} >NAME: {budgetObject.budget.name} ({budgetObject.category.name}) <NavLink
+                    className="btn btn-primary"
+                    activeClassName="active"
+                    to={"/budgets/edit/" + budgetObject.budget.id}
+                >Edit</NavLink></p>
                             <p>Budget MAX: {budgetObject.budget.budget_max}</p>
                             <p>Budget Real: {budgetObject.budget.budget_real}</p>
                         </div>
@@ -85,6 +89,11 @@ export class BudgetsPage extends Component {
                     activeClassName="active"
                     to="/"
                 >Go Home</NavLink>
+                <NavLink
+                    className="btn btn-primary"
+                    activeClassName="active"
+                    to="/budgets/create"
+                >New Budget</NavLink>
                 <NavLink
                     className="btn btn-primary"
                     activeClassName="active"
