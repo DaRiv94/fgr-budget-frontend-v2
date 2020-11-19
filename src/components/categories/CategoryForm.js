@@ -8,8 +8,10 @@ import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import Categories from '../../api/Categories';
+import Budgets from '../../api/Budgets';
 import {Redirect} from 'react-router-dom'
 import Toasts from '../common/Toasts'
+import ConfirmationAlert from '../common/ConfirmationAlert'
 
 export class CategoryForm extends Component {
     constructor(props) {
@@ -21,7 +23,8 @@ export class CategoryForm extends Component {
             category_color:"black",
             colors:["gray","red","orange","green","cyan","blue","magenta","purple"], //black is included as the default
             edit_mode:false,
-            redirect:false
+            redirect:false,
+            budgetList:[]
 
         }
         this.category_name_onChange = this.category_name_onChange.bind(this);
@@ -38,11 +41,20 @@ export class CategoryForm extends Component {
                 console.log("will edit")
                 try{
                     categoryToEdit = await Categories.GetACategory(this.props.match.params.id)
-                
+                    let budgetinfo = await Budgets.getBudgets()
+                    let budgetList=[]
+                    for (let i = 0; i < budgetinfo.budgets.length; i++) {
+                        
+                            if (categoryToEdit.id == budgetinfo.budgets[i].category_id) {
+                                budgetList.push(budgetinfo.budgets[i].name)
+                            }
+                        
+                    }
                     this.setState({
                         category_name:categoryToEdit.name,
                         category_color:categoryToEdit.color,
-                        edit_mode:true
+                        edit_mode:true,
+                        budgetList:budgetList
                     })
                 } catch (e) {
                     console.log("e:", e)
@@ -143,6 +155,25 @@ export class CategoryForm extends Component {
                         to="/budgets"
                         >Back to budgets</NavLink>
                         </div>
+                        {this.state.budgetList.length===0 &&  this.state.edit_mode && <ConfirmationAlert 
+                        buttonColor="secondary"
+                        buttonTitle="DELETE CATEGORY"
+                        dialogTitle="Are you sure you want to Delete this Category?"
+                        dialogMessage="This action can NOT be undone" 
+                        dialogCancelActionTitle="Cancel"
+                        dialogConfirmActionTitle="Delete"
+                        allowConfirm={true}
+                        confirmAction={this.deleteBudget} />}
+                        {this.state.budgetList.length!==0 &&  this.state.edit_mode && <ConfirmationAlert 
+                        buttonColor="secondary"
+                        buttonTitle="DELETE CATEGORY"
+                        dialogTitle="Are you sure you want to Delete this Category?"
+                        dialogMessage={<p>Cannot delete category while the following budgets are using it. {this.state.budgetList.map((budgetname)=>{return <b>{budgetname} </b>})}</p>}
+                        dialogCancelActionTitle="Cancel"
+                        dialogConfirmActionTitle="Delete"
+                        allowConfirm={false}
+                        confirmAction={this.deleteBudget} />}
+                       
                 </div>
             )
         }

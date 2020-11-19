@@ -3,7 +3,7 @@ const axios = require('axios');
 const baseUrl=process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
 
 
-class Categories{
+class Budgets{
 
     static getBudgets(){
         return new Promise(async (resolve,reject)=>{
@@ -98,4 +98,4 @@ function getAxiosConfig(){
         return axiosConfig;
 }
 
-export default Categories;
+export default Budgets;
