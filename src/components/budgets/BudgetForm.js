@@ -20,7 +20,6 @@ export class BudgetForm extends Component {
             loading: false,
             budget_name:"",
             budget_max:"",
-            budget_real:"",
             budget_category_id:"",
             user:{},
             categories:[],
@@ -30,7 +29,6 @@ export class BudgetForm extends Component {
         }
         this.budget_name_onChange = this.budget_name_onChange.bind(this);
         this.budget_max_onChange = this.budget_max_onChange.bind(this);
-        this.budget_real_onChange = this.budget_real_onChange.bind(this);
         this.budget_category_id_onChange = this.budget_category_id_onChange.bind(this);
         this.createOrEditBudget = this.createOrEditBudget.bind(this)
     }
@@ -48,12 +46,10 @@ export class BudgetForm extends Component {
                     console.log("BudgetToEdit:", BudgetToEdit)
                     console.log("BudgetToEdit.name:", BudgetToEdit.budget.name)
                     console.log("BudgetToEdit.budget_max:", BudgetToEdit.budget.budget_max)
-                    console.log("BudgetToEdit.budget_real:", BudgetToEdit.budget.budget_real)
                     console.log("BudgetToEdit.category_id:", BudgetToEdit.budget.category_id)
                     this.setState({
                         budget_name:BudgetToEdit.budget.name,
                         budget_max:BudgetToEdit.budget.budget_max,
-                        budget_real:BudgetToEdit.budget.budget_real,
                         budget_category_id:BudgetToEdit.budget.category_id,
                         edit_mode:true
                     })
@@ -88,11 +84,11 @@ export class BudgetForm extends Component {
             let response
             if(this.state.edit_mode){
                 response = await Budgets.EditABudget(this.props.match.params.id, 
-                    this.state.budget_name,this.state.budget_max,this.state.budget_real,this.state.budget_category_id);
+                    this.state.budget_name,this.state.budget_max,this.state.budget_category_id);
                 // console.log("==response: ", response);
                 Toasts.success("Successfully edited budget")
             }else{
-                response = await Budgets.CreateABudget(this.state.budget_name,this.state.budget_max,this.state.budget_real,this.state.budget_category_id);
+                response = await Budgets.CreateABudget(this.state.budget_name,this.state.budget_max,this.state.budget_category_id);
                 // console.log("==response: ", response);
                 Toasts.success("Successfully created a budget")
             }
@@ -124,11 +120,6 @@ export class BudgetForm extends Component {
             budget_max: e.target.value
         })
     }
-    budget_real_onChange(e) {
-        this.setState({
-            budget_real: e.target.value
-        })
-    }
     budget_category_id_onChange(e) {
         this.setState({
             budget_category_id: e.target.value
@@ -144,7 +135,7 @@ export class BudgetForm extends Component {
 
     render() {
 
-        let { budget_name, budget_max, budget_real, budget_category_id,  loading } = this.state
+        let { budget_name, budget_max, budget_category_id,  loading } = this.state
 
         return (
             <div>
@@ -157,9 +148,6 @@ export class BudgetForm extends Component {
                         
                         <label>Budget max</label>
                         <input type="text" onKeyPress={this.onKeyPress} onChange={this.budget_max_onChange} value={budget_max} />
-                        
-                        <label>Budget real</label>
-                        <input type="text" onKeyPress={this.onKeyPress} onChange={this.budget_real_onChange} value={budget_real} />
                         
                         <label>Category</label>                       
                         <div className="tagSelectDiv">

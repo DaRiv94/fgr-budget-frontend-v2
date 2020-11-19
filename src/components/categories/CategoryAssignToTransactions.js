@@ -11,6 +11,7 @@ import Categories from '../../api/Categories';
 import { Redirect } from 'react-router-dom'
 import Toasts from '../common/Toasts'
 import Info from '../../api/Info';
+import CategoryTransaction from '../../api/CategoryTransaction';
 import TransactionForAssigning from './TransactionForAssigning'
 
 export class CategoryAssignToTransactions extends Component {
@@ -31,7 +32,8 @@ export class CategoryAssignToTransactions extends Component {
         this.category_name_onChange = this.category_name_onChange.bind(this);
         this.category_color_onChange = this.category_color_onChange.bind(this);
         this.createOrEditCategory = this.createOrEditCategory.bind(this);
-        this.selected_category_id_onChange =this.selected_category_id_onChange.bind(this);
+        this.RemoveCategoryfromTransaction =this.RemoveCategoryfromTransaction.bind(this);
+        this.AddCategorytoTransaction = this.AddCategorytoTransaction.bind(this);
     }
 
     async componentWillMount() {
@@ -39,11 +41,15 @@ export class CategoryAssignToTransactions extends Component {
         if (token != null) {
             Auth.isAuthenticated = true;
             let transactions = {}
+            let categorytransactions =[]
             try {
                 transactions = await Info.getAllTransactions()
                 console.log("transactions: ", transactions)
+                categorytransactions = await CategoryTransaction.getAllCategoryTransaction()
+                console.log("categorytransactions: ", categorytransactions)
                 this.setState({
-                    transactions:transactions.transactions
+                    transactions:transactions.transactions,
+                    categorytransactions:categorytransactions.categorytransactions
                 })
             } catch (e) {
                 console.log("e:", e)
@@ -107,13 +113,7 @@ export class CategoryAssignToTransactions extends Component {
             category_color: e.target.value
         })
     }
-    selected_category_id_onChange(e) {
-        console.log("event: ",e)
-        console.log("event.target: ",e.target)
-        this.setState({
-            selected_category_id: e.target.value
-        })
-    }
+    
 
     onKeyPress(e) {
         if (e.key === 'Enter') {
@@ -121,13 +121,72 @@ export class CategoryAssignToTransactions extends Component {
         }
     }
 
-    AddCategorytoTransaction(category_id, transaction_id){
+    async AddCategorytoTransaction(category_id, transaction_id){
         console.log(`Will asign category ${category_id} to transaction ${transaction_id}`)
+        let newCategorytransactions = this.state.categorytransactions
+        let duplicate = false
+        for(let i=0;i<newCategorytransactions.length;i++){
+            if(newCategorytransactions[i].category_id == category_id && newCategorytransactions[i].transaction_id == transaction_id){
+                duplicate = true
+            }
+        }
         //I NEED TO CREATE AN API FOR CATEGORYTRANSACTIONS
         //i NEED TO CREATE THE ENDPOINTS ON THE BACKEND TO CREATE AND GET A LIST OF ALL
         //IN THIS METHOD I WILL CREATE A NEW A NEW CATEGORYTRANSACTION AND ADD IT TO categorytransactions SO IT WILL GET recgznied
-        
+        if(!duplicate){
+            try {
+                
+                let categorytransaction = await CategoryTransaction.CreateACategoryTransaction(category_id,transaction_id)
+                console.log("categorytransaction: ", categorytransaction)
+                
+                newCategorytransactions.push(categorytransaction.categorytransaction)
+                this.setState({
+                    categorytransactions:newCategorytransactions
+                })
+            } catch (e) {
+                console.log("e:", e)
+                Toasts.error(`probelm creating ccategroytransaction: e : ${e} `)
+            }
+        }else{
+            Toasts.error(`Category Already Added `)
+        }
+    }
 
+    async RemoveCategoryfromTransaction(category_id, transaction_id) {
+        let newCategorytransactions = this.state.categorytransactions
+        let found = false
+        let index = null
+        let categorytransaction_id_for_removal = null
+        for(let i=0;i<newCategorytransactions.length;i++){
+            if(newCategorytransactions[i].category_id == category_id && newCategorytransactions[i].transaction_id == transaction_id){
+                found = true
+                categorytransaction_id_for_removal = newCategorytransactions[i].id
+                index = i
+                break
+            }
+        }
+        
+        if(found){
+            try{
+                let removed_categorytransaction = await CategoryTransaction.DeleteACategoryTransaction(categorytransaction_id_for_removal) 
+
+                if (index > -1) {
+                    newCategorytransactions.splice(index, 1);
+                }
+                this.setState({
+                    categorytransactions:newCategorytransactions
+                })
+            }catch (e) {
+                console.log("e:", e)
+                Toasts.error(`probelm removeing categroytransaction: e : ${e} `)
+            }
+
+            
+        }else{
+            Toasts.error(`That Category Transaction doesnt exist `)
+        }
+
+        
     }
 
 
@@ -160,7 +219,7 @@ export class CategoryAssignToTransactions extends Component {
                                 }
                             }
                             return <TransactionForAssigning key={transaction.id}
-                             selected_category_id_onChange={this.selected_category_id_onChange} 
+                             RemoveCategoryfromTransaction={this.RemoveCategoryfromTransaction} 
                              assigned_categories={assigned_categories} 
                              selected_category_id={selected_category_id} 
                              categories={categories} 

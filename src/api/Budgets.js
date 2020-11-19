@@ -21,12 +21,12 @@ class Categories{
         })
     }
 
-    static CreateABudget(name,budget_max,budget_real,category_id){
+    static CreateABudget(name,budget_max,category_id){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.post(baseUrl + 'budget/', {name,budget_max,budget_real,category_id}, axiosConfig);
+                let response = await axios.post(baseUrl + 'budget/', {name,budget_max,category_id}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("CreateABudget response data",response.data);
                 resolve(response.data);
@@ -52,12 +52,28 @@ class Categories{
         })
     }
 
-    static EditABudget(id,name,budget_max,budget_real,category_id){
+    static DeleteABudget(id){
+        return new Promise(async (resolve,reject)=>{
+            let response ={}
+            try{
+                let axiosConfig = getAxiosConfig()
+
+                response = await axios.delete(baseUrl + 'budget/' + id, axiosConfig);
+                if (response.data==null) resolve(null) ;
+                console.log("GetABudget response data",response.data);
+                resolve(response.data);
+            }catch(e){
+                reject({Error:e,response:response})
+            }
+        })
+    }
+
+    static EditABudget(id,name,budget_max,category_id){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.put(baseUrl + 'budget/' + id, {name,budget_max,budget_real,category_id}, axiosConfig);
+                let response = await axios.put(baseUrl + 'budget/' + id, {name,budget_max,category_id}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("EditABudget response data",response.data);
                 resolve(response.data);
