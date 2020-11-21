@@ -5,6 +5,7 @@ import Info from '../../api/Info';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import Toasts from '../common/Toasts'
+import PreLoginHomePage from './PreLoginHomePage'
 
 export class HomePage extends Component {
     constructor(props) {
@@ -12,16 +13,12 @@ export class HomePage extends Component {
 
         this.state = {
             loading: false,
-            password: "",
-            email: "",
             is_sandbox: false,
             user: {},
             had_notification: false
 
         }
         this.login = this.login.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.emailOnChange = this.emailOnChange.bind(this);
         this.logout = this.logout.bind(this);
     }
 
@@ -36,7 +33,6 @@ export class HomePage extends Component {
             });
         }
 
-        // console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
         if (process.env.REACT_APP_PROJECT_ENV == 'sandbox') {
             this.setState({
                 is_sandbox: true
@@ -44,36 +40,16 @@ export class HomePage extends Component {
         }
     }
 
-    // componentDidMount(props){
-    //     console.log("Component did mount")
-    //     if(this.props.location.state){
-    //         console.log("toast: ",this.props.location.state.toast);
-    //         if(this.props.location.state.toast.type == "success"){
-    //             toast.success(this.props.location.state.toast.message, {
-    //                 position: "top-right",
-    //                 autoClose: 4000,
-    //                 hideProgressBar: false,
-    //                 closeOnClick: true,
-    //                 pauseOnHover: true,
-    //                 draggable: true,
-    //                 progress: undefined
-    //                 });
-    //         }
+    async login(email, password) {
 
-    //     }else{
-    //         console.log("nothing to do here")
-    //     }
-
-    // }
-
-    async login() {
-
+        console.log("submitted via login email: ", email)
+        console.log("submitted via login password: ", password)
         try {
             this.setState({
                 loading: true
             });
 
-            let res = await Auth.login(this.state.email, this.state.password);
+            let res = await Auth.login(email, password);
             console.log("res:", res);
             this.setState({
                 loading: false,
@@ -107,18 +83,6 @@ export class HomePage extends Component {
         this.forceUpdate();
     }
 
-    emailOnChange(e) {
-        this.setState({
-            email: e.target.value
-        })
-    }
-
-    onChange(e) {
-        this.setState({
-            password: e.target.value
-        })
-    }
-
     onKeyPress(e) {
         if (e.key === 'Enter') {
             document.getElementById("AddBtn").click();
@@ -128,16 +92,16 @@ export class HomePage extends Component {
 
     render() {
 
-        let { email, password, loading } = this.state
+        let { loading } = this.state
 
         return (
             <div>
-                <h1>Homepage</h1>
-
+                
                 {loading && <h2>Loading...</h2>}
 
                 {Auth.isAuthenticated ?
                     <div>
+                        <h1>PostHomepage</h1>
                         <NavLink
                             className="btn btn-primary"
                             activeClassName="active"
@@ -157,19 +121,7 @@ export class HomePage extends Component {
                         >budgets</NavLink>
                     </div>
                     :
-                    <div>
-                        <label>Email</label>
-                        <input type="text" onKeyPress={this.onKeyPress} onChange={this.emailOnChange} value={email} />
-                        <label>Password</label>
-                        <input type="password" onKeyPress={this.onKeyPress} onChange={this.onChange} value={password} />
-                        <button id="AddBtn" onClick={this.login}>Login</button>
-
-                        <NavLink
-                            className="btn btn-primary"
-                            activeClassName="active"
-                            to="/register"
-                        >Register</NavLink>
-                    </div>
+                    <PreLoginHomePage login={this.login} loading={loading} />
                 }
 
                 {Auth.isAuthenticated && this.state.is_sandbox &&
@@ -183,28 +135,10 @@ export class HomePage extends Component {
 
                     </div>}
 
-                {/* <ToastContainer
-                        newestOnTop={false}
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                    /> */}
             </div>
         )
     }
 }
-
-// function toasterror(message){
-//     toast.error(message, {
-//         position: "top-right",
-//         autoClose: 4000,
-//         hideProgressBar: false,
-//         closeOnClick: true,
-//         pauseOnHover: true,
-//         draggable: true,
-//         progress: undefined,
-//     });
-// }
 
 export default HomePage
 
