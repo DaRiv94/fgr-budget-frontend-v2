@@ -36,7 +36,7 @@ const validationSchema = yup.object({
         .required("Password is required")
 });
 
-const PreLoginHomePage = (props) => {
+const PostLoginHomePage = (props) => {
     const classes = useStyles();
     const formik = useFormik({
         initialValues: {
@@ -115,4 +115,4 @@ const PreLoginHomePage = (props) => {
     );
 };
 
-export default PreLoginHomePage;
+export default PostLoginHomePage;

@@ -8,7 +8,7 @@ import BudgetsPage from './components/budgets/BudgetsPage';
 import BudgetForm from './components/budgets/BudgetForm';
 import CategoryForm from './components/categories/CategoryForm';
 import CategoryAssignToTransactions from './components/categories/CategoryAssignToTransactions';
-import RegisterPage from './components/register/RegisterPage';
+import RegisterPageMain from './components/register/RegisterPageMain';
 import Summary from './components/data/Summary';
 import NewTransactionEmailTemplateExample from './components/notificationExamples/NewTransactionEmailTemplateExample';
 // import './App.css';
@@ -20,7 +20,7 @@ function App() {
       <Switch>
       {/* <Route exact path="/" component={HomePage} /> */}
       <Route exact path="/" render={(props) => <HomePage {...props}/>}/>
-      <Route exact path="/register" component={RegisterPage} />
+      <Route exact path="/register" component={RegisterPageMain} />
       <ProtectedRoute exact path="/linkrelink" component={LinkReLinkPage} />
       <ProtectedRoute exact path="/budgets" component={BudgetsPage} />
       <ProtectedRoute exact path="/budgets/create" component={BudgetForm} />

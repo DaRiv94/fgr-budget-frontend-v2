@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import Info from '../../api/Info';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import Toasts from '../common/Toasts'
 import PreLoginHomePage from './PreLoginHomePage'
+import PostLoginHomePage from './PostLoginHomePage'
 
 export class HomePage extends Component {
     constructor(props) {
@@ -42,8 +41,6 @@ export class HomePage extends Component {
 
     async login(email, password) {
 
-        console.log("submitted via login email: ", email)
-        console.log("submitted via login password: ", password)
         try {
             this.setState({
                 loading: true
@@ -81,12 +78,6 @@ export class HomePage extends Component {
         Auth.logout();
         //force update with similated state update
         this.forceUpdate();
-    }
-
-    onKeyPress(e) {
-        if (e.key === 'Enter') {
-            document.getElementById("AddBtn").click();
-        }
     }
 
 
