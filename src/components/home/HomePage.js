@@ -42,30 +42,6 @@ export class HomePage extends Component {
                 is_sandbox: true
             });
         }
-
-        // console.log("Component will mount")
-        // if(this.props.location.state){
-        //     console.log("toast: ",this.props.location.state.toast);
-        //     if(this.props.location.state.toast.type == "success"){
-        //         console.log("Toasting to success!: ", this.props.location.state.toast.message)
-        //         this.setState({
-        //             had_notification:true
-        //         })
-        //         toast.success(this.props.location.state.toast.message, {
-        //             position: "top-right",
-        //             autoClose: 4000,
-        //             hideProgressBar: false,
-        //             closeOnClick: true,
-        //             pauseOnHover: true,
-        //             draggable: true,
-        //             progress: undefined
-        //             });
-
-        //     }
-
-        // }else{
-        //     console.log("nothing to do here")
-        // }
     }
 
     // componentDidMount(props){

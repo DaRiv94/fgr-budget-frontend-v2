@@ -38,6 +38,8 @@ export class BudgetsPage extends Component {
 
         let budgetinfo = await Info.getBudgets()
 
+        
+
         let budgetObjects = []
         for (let i = 0; i < budgetinfo.budgets.length; i++) {
             for (let j = 0; j < budgetinfo.categories.length; j++) {

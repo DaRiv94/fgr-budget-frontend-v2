@@ -16,7 +16,7 @@ export class LinkReLinkPage extends Component {
         this.state = {
             loading: false,
             password: "",
-            // authenticated: false
+            is_sandbox: false,
             error: "",
             errorA: [],
             link_token: "",
@@ -43,19 +43,12 @@ export class LinkReLinkPage extends Component {
         // Will want to add some sort of notice for user if they need to update their Bank/Plaid_Item
         let banksinfo = await Info.getAllBanks()
 
-        // if (banks==null){
-        //     banks=[]
-        // }
-
 
         //Make request to backend to get status of accounts.
         //The backend, based on the user will query plaid on each account and see if they need to have their credentials updated
         // if something needs to be updated it will be reflected on this page.
         let link_token = await Plaid.linktokencreate()
         console.log("LINK_TOKEN: ", link_token)
-        this.setState({
-            link_token: link_token,
-        })
 
         //Call linktokencreate() with bank access_token in order to  
         // see https://plaid.com/docs/api/tokens/#linktokencreate
@@ -66,6 +59,12 @@ export class LinkReLinkPage extends Component {
             banks: banksinfo.banks,
             user: banksinfo.user
         })
+
+        if (process.env.REACT_APP_PROJECT_ENV == 'sandbox') {
+            this.setState({
+                is_sandbox: true
+            });
+        }
     }
 
     // getLinkToken = async () => {
@@ -140,7 +139,7 @@ export class LinkReLinkPage extends Component {
                     activeClassName="active"
                     to="/"
                 >Go Home</NavLink>
-                <p>HUmm: </p>
+                {this.state.is_sandbox && <p>NOTE: In demo mode you can sign into banks with the credentials USERNAME: user_good and PASSWORD: pass_good  </p>}
                 {this.state.banks.length === 0 && <p>NO Banks Are currently connected</p>}
                 {this.state.banks.length !== 0 && this.state.banks.map((bank) => {
                     return <div key={bank.id}>
