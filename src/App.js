@@ -9,7 +9,7 @@ import BudgetForm from './components/budgets/BudgetForm';
 import CategoryForm from './components/categories/CategoryForm';
 import CategoryAssignToTransactionsMain from './components/categories/CategoryAssignToTransactionsMain';
 import RegisterPageMain from './components/register/RegisterPageMain';
-import Summary from './components/data/Summary';
+import SummaryPageMain from './components/data/SummaryPageMain';
 import HelpPage from './components/common/HelpPage'
 import NewTransactionEmailTemplateExample from './components/notificationExamples/NewTransactionEmailTemplateExample';
 // import './App.css';
@@ -31,7 +31,7 @@ function App() {
       <ProtectedRoute exact path="/category/edit/:id" component={CategoryForm} />
       <ProtectedRoute exact path="/category/assign-to-transaction" component={CategoryAssignToTransactionsMain} />
       <ProtectedRoute exact path="/newtransactionemailtemplateexample" component={NewTransactionEmailTemplateExample}/>
-      <ProtectedRoute exact path="/summary" component={Summary}/>
+      <ProtectedRoute exact path="/summary" component={SummaryPageMain}/>
       <Route component={NotFoundPage} />
       </Switch>
       <ToastContainer

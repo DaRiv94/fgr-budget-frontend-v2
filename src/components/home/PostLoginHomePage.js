@@ -46,7 +46,7 @@ const PostLoginHomePage = (props) => {
                             fullWidth
                             color="primary"
                             variant="contained"
-                            component={Link} to="/Summary">
+                            component={Link} to="/summary">
                             Account Summary
                             </Button>
                     </Grid>
