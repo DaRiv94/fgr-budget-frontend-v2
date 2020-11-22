@@ -25,77 +25,54 @@ const useStyles = makeStyles({
     }
 });
 
-const validationSchema = yup.object({
-    email: yup
-        .string("Enter your email")
-        .email("Enter a valid email")
-        .required("Email is required"),
-    password: yup
-        .string("Enter your password")
-        .min(2, "Password should be minimum 2 characters length")
-        .required("Password is required")
-});
+
 
 const PostLoginHomePage = (props) => {
     const classes = useStyles();
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: ""
-        },
-        validationSchema: validationSchema,
-        onSubmit: (values) => {
-            props.login(values.email, values.password)
-        }
-    });
 
     return (
         <div>
 
             <h1 className={classes.header} >FGR Budget App</h1>
+    <h3 className={classes.header} >{props.user.email}</h3>
 
-            <form onSubmit={formik.handleSubmit}>
-                <Grid className={classes.centerize} container spacing={2}>
-                    <Grid container item xs={12} spacing={2}>
-                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
-                        <Grid item xs={12} sm={8}>
-                            <TextField
-                                fullWidth
-                                id="email"
-                                label="Email"
-                                variant="outlined"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                helperText={formik.touched.email && formik.errors.email}
-                            />
 
-                        </Grid>
-                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
-                    </Grid>
-                    <Grid container item xs={12} spacing={2}>
-                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
-                        <Grid item xs={12} sm={8}>
-                            <TextField
-                                fullWidth
-                                id="password"
-                                label="Password"
-                                type="password"
-                                variant="outlined"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                error={formik.touched.password && Boolean(formik.errors.password)}
-                                helperText={formik.touched.password && formik.errors.password}
-                            />
-                        </Grid>
-                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
-                    </Grid>
-                    <Grid container item xs={12} spacing={2}>
-                        <Grid item sm={2}></Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button fullWidth color="primary" variant="contained" type="submit">
-                                Submit
+            <Grid className={classes.centerize} container spacing={2}>
+
+                <Grid container item xs={12} spacing={2}>
+                    <Grid item sm={2} ></Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Button className={classes.registerBtn}
+                            fullWidth
+                            color="primary"
+                            variant="contained"
+                            component={Link} to="/Summary">
+                            Account Summary
                             </Button>
+                    </Grid>
+
+                    <Grid item xs={12} sm={4}>
+                        <Button className={classes.registerBtn}
+                            fullWidth
+                            color="primary"
+                            variant="contained"
+                            component={Link} to="/linkrelink">
+                            Banks
+                            </Button>
+                    </Grid>
+                    <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
+                </Grid>
+                    <>
+                    <Grid container item xs={12} spacing={2}>
+                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Button className={classes.registerBtn}
+                                fullWidth
+                                color="primary"
+                                variant="contained"
+                                component={Link} to="/budgets">
+                                Budgets
+                        </Button>
                         </Grid>
 
                         <Grid item xs={12} sm={4}>
@@ -103,14 +80,39 @@ const PostLoginHomePage = (props) => {
                                 fullWidth
                                 color="primary"
                                 variant="contained"
-                                component={Link} to="/register">
-                                Register
-                            </Button>
+                                component={Link} to="/newtransactionemailtemplateexample">
+                                Email Example
+                        </Button>
                         </Grid>
-                        <Grid item sm={2}></Grid>
+                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
                     </Grid>
-                </Grid>
-            </form>
+                    <Grid container item xs={12} spacing={2}>
+                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Button className={classes.registerBtn}
+                                fullWidth
+                                color="primary"
+                                variant="contained"
+                                component={Link} to="/help">
+                                Help
+                        </Button>
+                        </Grid>
+
+                        <Grid item xs={12} sm={4}>
+                            <Button className={classes.registerBtn}
+                                fullWidth
+                                color="primary"
+                                variant="contained"
+                                component={Link} onClick={props.logout}>
+                                Logout
+                        </Button>
+                        </Grid>
+                        <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
+                    </Grid>
+                    </>
+
+            </Grid>
+
         </div>
     );
 };

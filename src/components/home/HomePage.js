@@ -12,7 +12,6 @@ export class HomePage extends Component {
 
         this.state = {
             loading: false,
-            is_sandbox: false,
             user: {},
             had_notification: false
 
@@ -27,14 +26,9 @@ export class HomePage extends Component {
             Auth.isAuthenticated = true;
 
             let user = await Info.getUserData()
+            console.log("user: ", user)
             this.setState({
-                user: user
-            });
-        }
-
-        if (process.env.REACT_APP_PROJECT_ENV == 'sandbox') {
-            this.setState({
-                is_sandbox: true
+                user: user.user
             });
         }
     }
@@ -52,6 +46,7 @@ export class HomePage extends Component {
                 loading: false,
                 // authenticated:Auth.isAuthenticated
             });
+            Toasts.success("Logged In!", 1.5)
         } catch (e) {
             if (typeof (e.Error) == "string") {
                 console.log("typeof(e.Error)=='string'")
@@ -78,6 +73,7 @@ export class HomePage extends Component {
         Auth.logout();
         //force update with similated state update
         this.forceUpdate();
+        Toasts.success("Logged Out!", 1.5)
     }
 
 
@@ -91,40 +87,32 @@ export class HomePage extends Component {
                 {loading && <h2>Loading...</h2>}
 
                 {Auth.isAuthenticated ?
-                    <div>
-                        <h1>PostHomepage</h1>
-                        <NavLink
-                            className="btn btn-primary"
-                            activeClassName="active"
-                            to="/Summary"
-                        >Summary</NavLink>
+                //Pass in logout, not_sandbox
+                    <PostLoginHomePage logout={this.logout} user={this.state.user} />
+                    // <div>
+                    //     <h1>Home</h1>
+                    //     <h2>{this.state.user.email}</h2>
+                    //     <NavLink
+                    //         className="btn btn-primary"
+                    //         activeClassName="active"
+                    //         to="/summary"
+                    //     >Summary</NavLink>
 
-                        <button onClick={this.logout}>logout</button>
-                        <NavLink
-                            className="btn btn-primary"
-                            activeClassName="active"
-                            to="/linkrelink"
-                        >linkrelink</NavLink>
-                        <NavLink
-                            className="btn btn-primary"
-                            activeClassName="active"
-                            to="/budgets"
-                        >budgets</NavLink>
-                    </div>
+                    //     <button onClick={this.logout}>logout</button>
+                    //     <NavLink
+                    //         className="btn btn-primary"
+                    //         activeClassName="active"
+                    //         to="/linkrelink"
+                    //     >linkrelink</NavLink>
+                    //     <NavLink
+                    //         className="btn btn-primary"
+                    //         activeClassName="active"
+                    //         to="/budgets"
+                    //     >budgets</NavLink>
+                    // </div>
                     :
                     <PreLoginHomePage login={this.login} loading={loading} />
                 }
-
-                {Auth.isAuthenticated && this.state.is_sandbox &&
-                    <div>
-
-                        <NavLink
-                            className="btn btn-primary"
-                            activeClassName="active"
-                            to="/newtransactionemailtemplateexample"
-                        >See Example of New Transactions Email</NavLink>
-
-                    </div>}
 
             </div>
         )

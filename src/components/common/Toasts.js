@@ -14,10 +14,16 @@ class Toast{
             progress: undefined,
         });
     }
-    static success(message){
+    static success(message, seconds){
+        
+        //Set AutoClose by milliseconds
+        let autoClose_Milliseconds = 4000
+        if (seconds){
+            autoClose_Milliseconds = 1000 * seconds
+        }
         return toast.success(message, {
             position: "top-right",
-            autoClose: 4000,
+            autoClose: autoClose_Milliseconds,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
