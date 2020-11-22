@@ -126,13 +126,11 @@ export class CategoryAssignToTransactions extends Component {
         let newCategorytransactions = this.state.categorytransactions
         let duplicate = false
         for(let i=0;i<newCategorytransactions.length;i++){
-            if(newCategorytransactions[i].category_id == category_id && newCategorytransactions[i].transaction_id == transaction_id){
+            if(newCategorytransactions[i].category_id === category_id && newCategorytransactions[i].transaction_id === transaction_id){
                 duplicate = true
             }
         }
-        //I NEED TO CREATE AN API FOR CATEGORYTRANSACTIONS
-        //i NEED TO CREATE THE ENDPOINTS ON THE BACKEND TO CREATE AND GET A LIST OF ALL
-        //IN THIS METHOD I WILL CREATE A NEW A NEW CATEGORYTRANSACTION AND ADD IT TO categorytransactions SO IT WILL GET recgznied
+
         if(!duplicate){
             try {
                 
@@ -158,7 +156,7 @@ export class CategoryAssignToTransactions extends Component {
         let index = null
         let categorytransaction_id_for_removal = null
         for(let i=0;i<newCategorytransactions.length;i++){
-            if(newCategorytransactions[i].category_id == category_id && newCategorytransactions[i].transaction_id == transaction_id){
+            if(newCategorytransactions[i].category_id === category_id && newCategorytransactions[i].transaction_id === transaction_id){
                 found = true
                 categorytransaction_id_for_removal = newCategorytransactions[i].id
                 index = i
@@ -205,13 +203,13 @@ export class CategoryAssignToTransactions extends Component {
                     {loading && <h2>Loading...</h2>}
                     <div>
                         <label>Assign Categories to Transactions</label>
-                        {this.state.transactions.length == 0 && <p>No transactions here</p>}
+                        {this.state.transactions.length === 0 && <p>No transactions here</p>}
                         {this.state.transactions.length !== 0 && this.state.transactions.map(transaction => {
                             let assigned_categories=[]
                             for(let i =0; i<categorytransactions.length;i++){
-                                if(categorytransactions[i].transaction_id == transaction.id){
+                                if(categorytransactions[i].transaction_id === transaction.id){
                                     for(let j=0; j<categories.length; j++){
-                                        if(categories[j].id==categorytransactions[i].category_id){
+                                        if(categories[j].id === categorytransactions[i].category_id){
                                             assigned_categories.push(categories[j])
                                             break
                                         }
