@@ -4,7 +4,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import NotFoundPage from './components/common/NotFoundPage';
 import HomePage from './components/home/HomePage';
 import LinkReLinkPage from './components/link/LinkReLinkPage';
-import BudgetsPage from './components/budgets/BudgetsPage';
+import BudgetsPageMain from './components/budgets/BudgetsPageMain';
 import BudgetForm from './components/budgets/BudgetForm';
 import CategoryForm from './components/categories/CategoryForm';
 import CategoryAssignToTransactions from './components/categories/CategoryAssignToTransactions';
@@ -24,7 +24,7 @@ function App() {
       <Route exact path="/register" component={RegisterPageMain} />
       <ProtectedRoute exact path="/linkrelink" component={LinkReLinkPage} />
       <ProtectedRoute exact path="/help" component={HelpPage} />
-      <ProtectedRoute exact path="/budgets" component={BudgetsPage} />
+      <ProtectedRoute exact path="/budgets" component={BudgetsPageMain} />
       <ProtectedRoute exact path="/budgets/create" component={BudgetForm} />
       <ProtectedRoute exact path="/budgets/edit/:id" component={BudgetForm} />
       <ProtectedRoute exact path="/category/create" component={CategoryForm} />
