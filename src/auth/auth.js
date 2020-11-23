@@ -14,6 +14,7 @@ class Auth{
     }
 
     login(email, password){
+        // console.log("login : beginning: this.isAuthenticated:", this.isAuthenticated)
         return new Promise(async (resolve,reject)=>{
             try{
                 // console.log("in login");
@@ -31,6 +32,7 @@ class Auth{
                     sessionStorage.setItem('token', JSON.stringify(response.data.token));
                     this.isAuthenticated = true;
                     // console.log("Authenticated:", this.isAuthenticated)
+                    // console.log("login :end: this.isAuthenticated:", this.isAuthenticated)
                     resolve({"status":response.status, "data":response.data})
                 
             }catch(e){
@@ -48,46 +50,52 @@ class Auth{
     logout(){
         sessionStorage.removeItem('token');
         this.isAuthenticated = false;
-        // console.log("Authenticated:", this.isAuthenticated)
+        // console.log("logout this.isAuthenticated:", this.isAuthenticated)
         
     }
 
-    isAuthenticated(){
-        
-            // return new Promise(async (resolve,reject)=>{
-            //     try{
-            //         let axiosConfig = getAxiosConfig()
-    
-            //         let response = await axios.get(baseUrl + 'info/user', axiosConfig);
-            //         if (response.data==null) resolve(null) ;
-            //         console.log("getUserData response data",response.data);
-            //         if(response.status=='200'){
-            //             resolve(true)
-            //         }else{
-            //             resolve(false)
-            //         }
-            //     }catch(e){
-            //         console.log("isAuthenticated: e", e)
-            //         reject(e)
-            //     }
-            // })
-        
+    is_Authenticate(){
         return this.isAuthenticated;
+    }
+
+    check_Authenticated(){
+        // console.log("isAuthenticated this.isAuthenticated:", this.isAuthenticated)
+            return new Promise(async (resolve,reject)=>{
+                try{
+                    let axiosConfig = getAxiosConfig()
+    
+                    let response = await axios.post(baseUrl + 'auth', {}, axiosConfig);
+                    if (response.data==null) resolve(null) ;
+                    // console.log("getUserData response data",response.data);
+                    if(response.status=='200'){
+                        this.isAuthenticated =true
+                        // console.log("isAuthenticated Will Be auth", this.isAuthenticated)
+                        resolve(true)
+                    }else{
+                        this.isAuthenticated = false
+                        resolve(false)
+                    }
+                }catch(e){
+                    // console.log("isAuthenticated: e", e)
+                    this.isAuthenticated = false
+                    reject(false)
+                }
+            })
     }
 }
 
-// function getAxiosConfig(){
-//     let jwtStringToken = sessionStorage.getItem('token');
-//         let token = JSON.parse(jwtStringToken);
+function getAxiosConfig(){
+    let jwtStringToken = sessionStorage.getItem('token');
+        let token = JSON.parse(jwtStringToken);
 
-//         let axiosConfig = {
-//             headers: {
-//                 'Content-Type': 'application/json;charset=UTF-8',
-//                 "Access-Control-Allow-Origin": "*",
-//                 "x-auth-token":token
-//             }
-//         };
-//         return axiosConfig;
-// }
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                "x-auth-token":token
+            }
+        };
+        return axiosConfig;
+}
 
 export default new Auth();

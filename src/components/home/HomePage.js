@@ -23,7 +23,10 @@ export class HomePage extends Component {
     async componentWillMount() {
         let token = sessionStorage.getItem('token');
         if (token != null) {
-            Auth.isAuthenticated = true;
+            Auth.check_Authenticated().then((authenticated)=>{
+                Auth.isAuthenticated = authenticated
+                // console.log("HOME PAGE token check IN THEN ", Auth.isAuthenticated)
+            })
 
             let user = await Info.getUserData()
             console.log("user: ", user)
@@ -102,7 +105,7 @@ export class HomePage extends Component {
                     //     <NavLink
                     //         className="btn btn-primary"
                     //         activeClassName="active"
-                    //         to="/linkrelink"
+                    //         to="/link-bank"
                     //     >linkrelink</NavLink>
                     //     <NavLink
                     //         className="btn btn-primary"

@@ -38,9 +38,10 @@ export class CategoryAssignToTransactionsMain extends Component {
     }
 
     async componentWillMount() {
-        let token = sessionStorage.getItem('token');
-        if (token != null) {
-            Auth.isAuthenticated = true;
+        // let token = sessionStorage.getItem('token');
+        // if (token != null) {
+        //     Auth.isAuthenticated = true;
+        // }
             let transactions = {}
             let categorytransactions =[]
             try {
@@ -67,7 +68,7 @@ export class CategoryAssignToTransactionsMain extends Component {
                 user: user,
                 categories: categories.categories
             });
-        }
+        
 
 
     }

@@ -27,7 +27,7 @@ class Categories{
 
                 let response = await axios.post(baseUrl + 'category/', {name,color}, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("CreateACategory response data",response.data);
+                // console.log("CreateACategory response data",response.data);
                 resolve(response.data);
             }catch(e){
                 reject(e)
@@ -43,7 +43,7 @@ class Categories{
 
                 response = await axios.get(baseUrl + 'category/' + id, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("GetACategory response data",response.data);
+                // console.log("GetACategory response data",response.data);
                 resolve(response.data);
             }catch(e){
                 reject({Error:e,response:response})
@@ -59,7 +59,7 @@ class Categories{
 
                 response = await axios.delete(baseUrl + 'category/' + id, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("DeleteACategory response data",response.data);
+                // console.log("DeleteACategory response data",response.data);
                 resolve(response.data);
             }catch(e){
                 reject({Error:e,response:response})

@@ -86,7 +86,7 @@ export class Summary extends Component {
                     //         <p>You will also need to manually trigger the webhook to create some transactions (This can in the banks section after you connect your bank)</p>
                     //         <NavLink
                     //             className="btn btn-primary"
-                    //             to="/linkrelink"
+                    //             to="/link-bank"
                     //         >Banks</NavLink>
                     //     </div>
                     // }

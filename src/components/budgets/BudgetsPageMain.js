@@ -32,10 +32,10 @@ export class BudgetsPageMain extends Component {
     }
 
     async componentWillMount() {
-        let token = sessionStorage.getItem('token');
-        if (token != null) {
-            Auth.isAuthenticated = true;
-        }
+        // let token = sessionStorage.getItem('token');
+        // if (token != null) {
+        //     Auth.isAuthenticated = true;
+        // }
 
         let budgetinfo = await Info.getBudgets()
 

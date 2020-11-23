@@ -35,9 +35,10 @@ export class CategoryFormMain extends Component {
     }
 
     async componentWillMount() {
-        let token = sessionStorage.getItem('token');
-        if (token != null) {
-            Auth.isAuthenticated=true;
+        // let token = sessionStorage.getItem('token');
+        // if (token != null) {
+        //     Auth.isAuthenticated=true;
+        // }
             let categoryToEdit ={}
             if(this.props.match.params.id){
                 console.log("will edit")
@@ -69,7 +70,7 @@ export class CategoryFormMain extends Component {
             }else{
                 console.log("Will Create")
             }
-        }
+        
     }
 
     async createOrEditCategory(category_name, category_color) {

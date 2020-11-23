@@ -40,9 +40,10 @@ export class BudgetFormMain extends Component {
     }
 
     async componentWillMount() {
-        let token = sessionStorage.getItem('token');
-        if (token != null) {
-            Auth.isAuthenticated = true;
+        // let token = sessionStorage.getItem('token');
+        // if (token != null) {
+        //     Auth.isAuthenticated = true;
+        // }
 
             let BudgetToEdit = {}
             if (this.props.match.params.id) {
@@ -79,7 +80,7 @@ export class BudgetFormMain extends Component {
                 categories: categories.categories
             });
 
-        }
+        
     }
 
     async createOrEditBudget(budget_name, budget_max, budget_category_id) {

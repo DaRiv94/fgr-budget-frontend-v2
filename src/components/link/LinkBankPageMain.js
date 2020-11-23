@@ -31,10 +31,10 @@ export class LinkBankPageMain extends Component {
     }
 
     async componentWillMount() {
-        let token = sessionStorage.getItem('token');
-        if (token != null) {
-            Auth.isAuthenticated = true;
-        }
+        // let token = sessionStorage.getItem('token');
+        // if (token != null) {
+        //     Auth.isAuthenticated = true;
+        // }
 
         //Make a call to get the user (Maybe change the auth check)
         // likely just add the auth user check again, and get user info,
