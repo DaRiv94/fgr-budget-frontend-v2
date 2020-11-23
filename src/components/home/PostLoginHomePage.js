@@ -56,7 +56,7 @@ const PostLoginHomePage = (props) => {
                             fullWidth
                             color="primary"
                             variant="contained"
-                            component={Link} to="/linkrelink">
+                            component={Link} to="/link-bank">
                             Banks
                             </Button>
                     </Grid>

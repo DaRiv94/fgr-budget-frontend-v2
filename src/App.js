@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import NotFoundPage from './components/common/NotFoundPage';
 import HomePage from './components/home/HomePage';
-import LinkReLinkPage from './components/link/LinkReLinkPage';
+import LinkBankPageMain from './components/link/LinkBankPageMain';
 import BudgetsPageMain from './components/budgets/BudgetsPageMain';
 import BudgetFormMain from './components/budgets/BudgetFormMain';
 import CategoryFormMain from './components/categories/CategoryFormMain';
@@ -22,7 +22,7 @@ function App() {
       {/* <Route exact path="/" component={HomePage} /> */}
       <Route exact path="/" render={(props) => <HomePage {...props}/>}/>
       <Route exact path="/register" component={RegisterPageMain} />
-      <ProtectedRoute exact path="/linkrelink" component={LinkReLinkPage} />
+      <ProtectedRoute exact path="/link-bank" component={LinkBankPageMain} />
       <ProtectedRoute exact path="/help" component={HelpPage} />
       <ProtectedRoute exact path="/budgets" component={BudgetsPageMain} />
       <ProtectedRoute exact path="/budgets/create" component={BudgetFormMain} />

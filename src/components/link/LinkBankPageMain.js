@@ -9,7 +9,7 @@ import Plaid from '../../api/Plaid';
 import Info from '../../api/Info';
 import Triggerwebhook from '../../api/Triggerwebhook';
 
-export class LinkReLinkPage extends Component {
+export class LinkBankPageMain extends Component {
     constructor(props) {
         super(props)
 
@@ -119,7 +119,7 @@ export class LinkReLinkPage extends Component {
     render() {
         return (
             <div>
-                <h1>LinkReLinkPage!</h1>
+                <h1>LinkBankPageMain!</h1>
 
 
                 <PlaidLink
@@ -127,7 +127,8 @@ export class LinkReLinkPage extends Component {
                         padding: '10px 8px',
                         outline: 'none',
                         background: 'blue',
-                        color: 'white'
+                        color: 'white',
+                        maxWidth:"150px"
                     }}
                     token={this.state.link_token}
                     onSuccess={this.onSuccess}
@@ -159,5 +160,5 @@ export class LinkReLinkPage extends Component {
     }
 }
 
-export default LinkReLinkPage
+export default LinkBankPageMain
 
