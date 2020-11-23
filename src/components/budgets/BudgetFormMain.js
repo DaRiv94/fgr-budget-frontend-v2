@@ -12,9 +12,10 @@ import Budgets from '../../api/Budgets';
 import Categories from '../../api/Categories';
 import Toasts from '../common/Toasts'
 import ConfirmationAlert from '../common/ConfirmationAlert'
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+import BudgetForm from './BudgetForm'
 
-export class BudgetForm extends Component {
+export class BudgetFormMain extends Component {
     constructor(props) {
         super(props)
 
@@ -27,7 +28,8 @@ export class BudgetForm extends Component {
             categories: [],
             selected_category_id: "",
             edit_mode: false,
-            redirect: false
+            redirect: false,
+            select_error: false
 
         }
         this.budget_name_onChange = this.budget_name_onChange.bind(this);
@@ -80,37 +82,52 @@ export class BudgetForm extends Component {
         }
     }
 
-    async createOrEditBudget() {
-        try {
+    async createOrEditBudget(budget_name, budget_max, budget_category_id) {
+
+        console.log("budget_name:", budget_name)
+        console.log("budget_max:", budget_max)
+        console.log("budget_category_id:", budget_category_id)
+        // console.log("!budget_category_id", !budget_category_id)
+        if (!budget_category_id) {
             this.setState({
-                loading: true
+                select_error: true
             });
-            let response
-            if (this.state.edit_mode) {
-                response = await Budgets.EditABudget(this.props.match.params.id,
-                    this.state.budget_name, this.state.budget_max, this.state.budget_category_id);
-                // console.log("==response: ", response);
-                Toasts.success("Successfully edited budget")
-            } else {
-                response = await Budgets.CreateABudget(this.state.budget_name, this.state.budget_max, this.state.budget_category_id);
-                // console.log("==response: ", response);
-                Toasts.success("Successfully created a budget")
+            Toasts.error("Category is required")
+        } else {
+            try {
+                this.setState({
+                    loading: true,
+                    select_error: false
+                });
+                let response
+                if (this.state.edit_mode) {
+                    response = await Budgets.EditABudget(this.props.match.params.id,
+                        budget_name, budget_max, budget_category_id);
+                    // console.log("==response: ", response);
+                    Toasts.success("Successfully edited budget")
+                } else {
+                    response = await Budgets.CreateABudget(budget_name, budget_max, budget_category_id);
+                    // console.log("==response: ", response);
+                    Toasts.success("Successfully created a budget")
+                }
+                this.setState({
+                    error: "",
+                    loading: false,
+                    redirect: true
+                });
+            } catch (e) {
+                if (typeof (e.Error) == "string") {
+                    Toasts.error(e.Error)
+                } else {
+                    Toasts.error(JSON.stringify(e))
+                }
+                this.setState({
+                    loading: false
+                });
             }
-            this.setState({
-                error: "",
-                loading: false,
-                redirect: true
-            });
-        } catch (e) {
-            if (typeof (e.Error) == "string") {
-                Toasts.error(e.Error)
-            } else {
-                Toasts.error(JSON.stringify(e))
-            }
-            this.setState({
-                loading: false
-            });
         }
+
+
     }
 
     async deleteBudget() {
@@ -118,12 +135,12 @@ export class BudgetForm extends Component {
             this.setState({
                 loading: true
             });
-                // console.log(`DELETEING budget ${this.props.match.params.id} `)
-            
-                let response = await Budgets.DeleteABudget(this.props.match.params.id);
-                  
-                Toasts.success("successfully deleted budget")
-            
+            // console.log(`DELETEING budget ${this.props.match.params.id} `)
+
+            let response = await Budgets.DeleteABudget(this.props.match.params.id);
+
+            Toasts.success("successfully deleted budget")
+
             this.setState({
                 error: "",
                 loading: false,
@@ -154,7 +171,8 @@ export class BudgetForm extends Component {
     }
     budget_category_id_onChange(e) {
         this.setState({
-            budget_category_id: e.target.value
+            budget_category_id: e.target.value,
+            select_error: false
         })
     }
 
@@ -167,57 +185,73 @@ export class BudgetForm extends Component {
 
     render() {
 
-        let { budget_name, budget_max, budget_category_id, loading } = this.state
+        let { budget_name, budget_max, budget_category_id, loading, edit_mode, categories, select_error } = this.state
         if (this.state.redirect) {
             return <Redirect
                 to="/budgets"
             />
         } else {
-            return (
-                <div>
-                    <h1>BudgetForm</h1>
+            return (<>
+                {loading && <p>Loading...</p>}
+                <BudgetForm budget_name={budget_name}
+                    budget_max={budget_max}
+                    budget_category_id={budget_category_id}
+                    budget_category_id_onChange={this.budget_category_id_onChange}
+                    edit_mode={edit_mode}
+                    categories={categories}
+                    select_error={select_error}
+                    createOrEditBudget={this.createOrEditBudget}
+                    deleteBudget={this.deleteBudget}
+                />
+            </>
 
-                    {loading && <h2>Loading...</h2>}
-                    <div>
-                        <label>Budget name</label>
-                        <input type="text" onKeyPress={this.onKeyPress} onChange={this.budget_name_onChange} value={budget_name} />
-
-                        <label>Budget max</label>
-                        <input type="text" onKeyPress={this.onKeyPress} onChange={this.budget_max_onChange} value={budget_max} />
-
-                        <label>Category</label>
-                        <div className="tagSelectDiv">
-                            <select name="select_tag" onChange={this.budget_category_id_onChange} value={budget_category_id}>
-                                <option value="">None</option>
-                                {this.state.categories.map(category => {
-                                    return <option key={category.id} style={{ color: category.color }} value={category.id}>{category.name}</option>
-                                })}
-
-                            </select>
-                        </div>
-                        <button id="AddBtn" onClick={this.createOrEditBudget}>{this.state.edit_mode ? "Edit" : "Create"}</button>
-
-                        <NavLink
-                            className="btn btn-primary"
-                            activeClassName="active"
-                            to="/budgets"
-                        >Back To Budgets</NavLink>
-                    </div>
-                    {this.state.edit_mode && <ConfirmationAlert 
-                     buttonColor="secondary"
-                     buttonTitle="DELETE BUDGET"
-                     dialogTitle="Are you sure you want to Delete this Budget?"
-                     dialogMessage="This action can NOT be undone." 
-                     dialogCancelActionTitle="Cancel"
-                     dialogConfirmActionTitle="Delete"
-                     allowConfirm={true}
-                     confirmAction={this.deleteBudget} />}
-
-                </div>
             )
+
+            // return (
+            //     <div>
+            //         <h1>BudgetForm</h1>
+
+            //         {loading && <h2>Loading...</h2>}
+            //         <div>
+            //             <label>Budget name</label>
+            //             <input type="text" onKeyPress={this.onKeyPress} onChange={this.budget_name_onChange} value={budget_name} />
+
+            //             <label>Budget max</label>
+            //             <input type="text" onKeyPress={this.onKeyPress} onChange={this.budget_max_onChange} value={budget_max} />
+
+            //             <label>Category</label>
+            //             <div className="tagSelectDiv">
+            //                 <select name="select_tag" onChange={this.budget_category_id_onChange} value={budget_category_id}>
+            //                     <option value="">None</option>
+            //                     {categories.map(category => {
+            //                         return <option key={category.id} style={{ color: category.color }} value={category.id}>{category.name}</option>
+            //                     })}
+
+            //                 </select>
+            //             </div>
+            //             <button id="AddBtn" onClick={this.createOrEditBudget}>{edit_mode ? "Edit" : "Create"}</button>
+
+            //             <NavLink
+            //                 className="btn btn-primary"
+            //                 activeClassName="active"
+            //                 to="/budgets"
+            //             >Back To Budgets</NavLink>
+            //         </div>
+                    // {edit_mode && <ConfirmationAlert 
+                    //  buttonColor="secondary"
+                    //  buttonTitle="DELETE BUDGET"
+                    //  dialogTitle="Are you sure you want to Delete this Budget?"
+                    //  dialogMessage="This action can NOT be undone." 
+                    //  dialogCancelActionTitle="Cancel"
+                    //  dialogConfirmActionTitle="Delete"
+                    //  allowConfirm={true}
+                    //  confirmAction={this.deleteBudget} />}
+
+            //     </div>
+            // )
         }
     }
 }
 
-export default BudgetForm
+export default BudgetFormMain
 

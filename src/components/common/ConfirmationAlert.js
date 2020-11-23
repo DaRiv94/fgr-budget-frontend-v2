@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
 
   return (
     <div>
-      <Button variant="outlined" color={props.buttonColor} onClick={handleClickOpen}>
+      <Button className={props.className} variant="contained" color={props.buttonColor} onClick={handleClickOpen}>
       {props.buttonTitle}
       </Button>
       <Dialog
