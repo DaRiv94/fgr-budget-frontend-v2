@@ -6,7 +6,7 @@ import HomePage from './components/home/HomePage';
 import LinkReLinkPage from './components/link/LinkReLinkPage';
 import BudgetsPageMain from './components/budgets/BudgetsPageMain';
 import BudgetFormMain from './components/budgets/BudgetFormMain';
-import CategoryForm from './components/categories/CategoryForm';
+import CategoryFormMain from './components/categories/CategoryFormMain';
 import CategoryAssignToTransactionsMain from './components/categories/CategoryAssignToTransactionsMain';
 import RegisterPageMain from './components/register/RegisterPageMain';
 import SummaryPageMain from './components/data/SummaryPageMain';
@@ -27,8 +27,8 @@ function App() {
       <ProtectedRoute exact path="/budgets" component={BudgetsPageMain} />
       <ProtectedRoute exact path="/budgets/create" component={BudgetFormMain} />
       <ProtectedRoute exact path="/budgets/edit/:id" component={BudgetFormMain} />
-      <ProtectedRoute exact path="/category/create" component={CategoryForm} />
-      <ProtectedRoute exact path="/category/edit/:id" component={CategoryForm} />
+      <ProtectedRoute exact path="/category/create" component={CategoryFormMain} />
+      <ProtectedRoute exact path="/category/edit/:id" component={CategoryFormMain} />
       <ProtectedRoute exact path="/category/assign-to-transaction" component={CategoryAssignToTransactionsMain} />
       <ProtectedRoute exact path="/newtransactionemailtemplateexample" component={NewTransactionEmailTemplateExample}/>
       <ProtectedRoute exact path="/summary" component={SummaryPageMain}/>

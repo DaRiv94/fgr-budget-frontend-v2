@@ -51,6 +51,22 @@ class Categories{
         })
     }
 
+    static DeleteACategory(id){
+        return new Promise(async (resolve,reject)=>{
+            let response ={}
+            try{
+                let axiosConfig = getAxiosConfig()
+
+                response = await axios.delete(baseUrl + 'category/' + id, axiosConfig);
+                if (response.data==null) resolve(null) ;
+                console.log("DeleteACategory response data",response.data);
+                resolve(response.data);
+            }catch(e){
+                reject({Error:e,response:response})
+            }
+        })
+    }
+
     static EditACategory(id,name,color){
         return new Promise(async (resolve,reject)=>{
             try{

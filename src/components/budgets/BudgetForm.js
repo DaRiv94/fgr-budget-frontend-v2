@@ -161,7 +161,6 @@ const RegisterPage = (props) => {
                                  {categories.map(category => {
                                      return <option key={category.id} style={{ color: category.color }} value={category.id}>{category.name}</option>
                                  })}
-
                              </select> */}
                                 <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
                                 <Select
