@@ -1,40 +1,47 @@
 import React from 'react'
-import {Route, Redirect} from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import Auth from '../../auth/auth'
 
-export const ProtectedRoute = ({component:Component, ...rest}) => {
+export const ProtectedRoute = ({ component: Component, ...rest }) => {
+
+    console.log("ProtectedRoute Component: ", Component)
+    console.log("ProtectedRoute THE REST: ", rest)
     return (
-        <Route 
+        <Route
             {...rest}
-            render ={  props =>{
-                // console.log("")
+            render={props => {
+                console.log("ProtectedRoute props:",props)
                 let token = sessionStorage.getItem('token');
+
                 // console.log("ProtectedRoute before check Auth.isAuthenticated: ", Auth.isAuthenticated//)
+                // if (token != null) {
+                //     // console.log("ProtectedRoute Oh Look a token!! ", Auth.isAuthenticated)
+                //     Auth.check_Authenticated().then((authenticated) => {
+                //         Auth.isAuthenticated = authenticated
+                //         // console.log("ProtectedRoute results after token check IN THEN ", Auth.isAuthenticated)
+                //     })
+                //     // console.log("ProtectedRoute results after token check ", Auth.isAuthenticated)//
+                // } else {
+                //     // console.log("ProtectedRoute No Token No Service ", Auth.isAuthenticated)
+                //     Auth.isAuthenticated = false
+                // }
                 if (token != null) {
-                    // console.log("ProtectedRoute Oh Look a token!! ", Auth.isAuthenticated)
-                    Auth.check_Authenticated().then((authenticated)=>{
-                        Auth.isAuthenticated = authenticated
-                        // console.log("ProtectedRoute results after token check IN THEN ", Auth.isAuthenticated)
-                    })
-                    // console.log("ProtectedRoute results after token check ", Auth.isAuthenticated)//
-                }else{
-                    // console.log("ProtectedRoute No Token No Service ", Auth.isAuthenticated)
-                    Auth.isAuthenticated = false
+                    Auth.isAuthenticated = true
                 }
                 // console.log("ProtectedRoute after check Auth.isAuthenticated: ", Auth.isAuthenticated)
-                if(Auth.isAuthenticated){
-                    return <Component {...props}/>
-                }else{
-                    return <Redirect 
-                    to="/"
+                if (Auth.isAuthenticated) {
+                    return <Component {...props} />
+                } else {
+                    return <Redirect
+                        to="/"
                     />
                 }
-                
+
             }
-        }
+            }
         />
     );
-} 
+}
 
 // export const ProtectedRoute = async ({component:Component, ...rest}) => {
 
@@ -50,7 +57,7 @@ export const ProtectedRoute = ({component:Component, ...rest}) => {
 //                         Auth.isAuthenticated=true;
 //                     }
 //                         return <Component {...props}/>
-                    
+
 //                 }
 //             }
 //             />
@@ -72,7 +79,7 @@ export const ProtectedRoute = ({component:Component, ...rest}) => {
 //             />
 //         );
 //     }
-    
+
 // } 
 
 export default ProtectedRoute;

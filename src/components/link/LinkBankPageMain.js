@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import Toasts from '../common/Toasts'
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
@@ -8,6 +8,7 @@ import './LinkReLinkPage.css'
 import Plaid from '../../api/Plaid';
 import Info from '../../api/Info';
 import Triggerwebhook from '../../api/Triggerwebhook';
+import LinkBankPage from './LinkBankPage'
 
 export class LinkBankPageMain extends Component {
     constructor(props) {
@@ -15,12 +16,8 @@ export class LinkBankPageMain extends Component {
 
         this.state = {
             loading: false,
-            password: "",
             is_sandbox: false,
-            error: "",
-            errorA: [],
             link_token: "",
-            user: {},
             banks: []
 
         }
@@ -56,8 +53,7 @@ export class LinkBankPageMain extends Component {
         // console.log("banksinfo.banks: ",banksinfo.banks)
         this.setState({
             link_token: link_token,
-            banks: banksinfo.banks,
-            user: banksinfo.user
+            banks: banksinfo.banks
         })
 
         if (process.env.REACT_APP_PROJECT_ENV == 'sandbox') {
@@ -82,15 +78,8 @@ export class LinkBankPageMain extends Component {
 
         let response = await Triggerwebhook.triggerwebhook(item_id);
         console.log("Clicked manuallytriggerwebhook response:", response);
-        toast.success(response.detail, {
-            position: "top-right",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+        Toasts.success(response.detail)
+
     }
 
     onSuccess = async (token, metadata) => {
@@ -99,15 +88,8 @@ export class LinkBankPageMain extends Component {
         console.log("Metadata: ", metadata)
         let bank_data = await Plaid.connectbank(token, metadata)
         console.log("bank_data: ", bank_data)
-        toast.success("Bank Successfully connected!", {
-            position: "top-right",
-            autoClose: 6000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+        Toasts.success("Bank Successfully connected!")
+
         //make axios call to webhook service, That webhook service should take this public token, 
         //make the call to plaid, save the item_id and the access_token and then return a postive confirmation message
     };
@@ -117,46 +99,55 @@ export class LinkBankPageMain extends Component {
 
 
     render() {
-        return (
-            <div>
-                <h1>LinkBankPageMain!</h1>
+        let {is_sandbox, banks, link_token, loading} = this.state
+        return (<>
+        {loading && <p>LOADING...</p>}
+        <LinkBankPage is_sandbox={is_sandbox} onSuccess={this.onSuccess} 
+        manuallytriggerwebhook={this.manuallytriggerwebhook} 
+        link_token={link_token}
+        banks={banks}/>
+        </>);
+
+        // return (
+        //     <div>
+        //         <h1>LinkBankPageMain!</h1>
 
 
-                <PlaidLink
-                    style={{
-                        padding: '10px 8px',
-                        outline: 'none',
-                        background: 'blue',
-                        color: 'white',
-                        maxWidth:"150px"
-                    }}
-                    token={this.state.link_token}
-                    onSuccess={this.onSuccess}
-                >
-                    Connect a bank account
-                </PlaidLink>
-                <NavLink
-                    className="btn btn-primary"
-                    activeClassName="active"
-                    to="/"
-                >Go Home</NavLink>
-                {this.state.is_sandbox && <p>NOTE: In demo mode you can sign into banks with the credentials USERNAME: user_good and PASSWORD: pass_good  </p>}
-                {this.state.banks.length === 0 && <p>NO Banks Are currently connected</p>}
-                {this.state.banks.length !== 0 && this.state.banks.map((bank) => {
-                    return <div key={bank.id}>
-                        <p  >{bank.institution_name}</p>
-                        <button onClick={() => { this.manuallytriggerwebhook(bank.item_id) }}>Get past 10 day transactions</button>
-                    </div>
-                })}
-                <ToastContainer
-                    newestOnTop={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                />
-                <ToastContainer />
-            </div>
-        )
+                // <PlaidLink
+                //     style={{
+                //         padding: '10px 8px',
+                //         outline: 'none',
+                //         background: 'blue',
+                //         color: 'white',
+                //         maxWidth:"150px"
+                //     }}
+                //     token={this.state.link_token}
+                //     onSuccess={this.onSuccess}
+                // >
+                //     Connect a bank account
+                // </PlaidLink>
+        //         <NavLink
+        //             className="btn btn-primary"
+        //             activeClassName="active"
+        //             to="/"
+        //         >Go Home</NavLink>
+        //         {this.state.is_sandbox && <p>NOTE: In demo mode you can sign into banks with the credentials USERNAME: user_good and PASSWORD: pass_good  </p>}
+        //         {this.state.banks.length === 0 && <p>NO Banks Are currently connected</p>}
+        //         {this.state.banks.length !== 0 && this.state.banks.map((bank) => {
+        //             return <div key={bank.id}>
+        //                 <p  >{bank.institution_name}</p>
+        //                 <button onClick={() => { this.manuallytriggerwebhook(bank.item_id) }}>Get past 10 day transactions</button>
+        //             </div>
+        //         })}
+        //         {/* <ToastContainer
+        //             newestOnTop={false}
+        //             rtl={false}
+        //             pauseOnFocusLoss
+        //             draggable
+        //         />
+        //         <ToastContainer /> */}
+        //     </div>
+        // )
     }
 }
 

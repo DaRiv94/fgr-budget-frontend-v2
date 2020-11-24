@@ -23,10 +23,11 @@ export class HomePage extends Component {
     async componentWillMount() {
         let token = sessionStorage.getItem('token');
         if (token != null) {
-            Auth.check_Authenticated().then((authenticated)=>{
-                Auth.isAuthenticated = authenticated
-                // console.log("HOME PAGE token check IN THEN ", Auth.isAuthenticated)
-            })
+            // Auth.check_Authenticated().then((authenticated)=>{
+            //     Auth.isAuthenticated = authenticated
+            //     // console.log("HOME PAGE token check IN THEN ", Auth.isAuthenticated)
+            // })
+            Auth.isAuthenticated = true
 
             let user = await Info.getUserData()
             console.log("user: ", user)

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
@@ -70,7 +71,7 @@ const PostLoginHomePage = (props) => {
                                 fullWidth
                                 color="primary"
                                 variant="contained"
-                                component={Link} to="/budgets">
+                                component={NavLink} to="/budgets">
                                 Budgets
                         </Button>
                         </Grid>
