@@ -1,18 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
-import { useFormik } from "formik";
+// import { useFormik } from "formik";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Typography from "@material-ui/core/Typography";
+// import InputLabel from "@material-ui/core/InputLabel";
+// import MenuItem from "@material-ui/core/MenuItem";
+// import FormHelperText from "@material-ui/core/FormHelperText";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+// import Typography from "@material-ui/core/Typography";
 import BankCard from './BankCard';
 import { PlaidLink } from 'react-plaid-link';
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 
 const LinkBankPage = (props) => {
     const classes = useStyles();
-    let { is_sandbox, onSuccess, manuallytriggerwebhook, link_token, banks } = props
+    let { onSuccess, manuallytriggerwebhook, link_token, banks } = props
 
 
 
@@ -111,7 +111,7 @@ const LinkBankPage = (props) => {
                     <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
                 </Grid>
 
-                {banks.length == 0 ?
+                {banks.length === 0 ?
                     <p>No Banks here</p> : banks.map((bank) => {
 
                         return <Grid key={bank.id} container item xs={12} spacing={2}>

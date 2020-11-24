@@ -67,7 +67,7 @@ class Auth{
                     let response = await axios.post(baseUrl + 'auth', {}, axiosConfig);
                     if (response.data==null) resolve(null) ;
                     // console.log("getUserData response data",response.data);
-                    if(response.status=='200'){
+                    if(response.status==='200'){
                         this.isAuthenticated =true
                         // console.log("isAuthenticated Will Be auth", this.isAuthenticated)
                         resolve(true)

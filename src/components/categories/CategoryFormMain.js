@@ -5,13 +5,13 @@
 //...the budget patch and prepopulation of forms with the current budget values for edit.
 
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
-import Auth from "../../auth/auth";
+// import { NavLink } from "react-router-dom";
+// import Auth from "../../auth/auth";
 import Categories from '../../api/Categories';
 import Budgets from '../../api/Budgets';
 import {Redirect} from 'react-router-dom'
 import Toasts from '../common/Toasts'
-import ConfirmationAlert from '../common/ConfirmationAlert'
+// import ConfirmationAlert from '../common/ConfirmationAlert'
 import CategoryForm from './CategoryForm'
 
 export class CategoryFormMain extends Component {

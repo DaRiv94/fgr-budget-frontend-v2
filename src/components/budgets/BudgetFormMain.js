@@ -5,13 +5,13 @@
 //...the budget patch and prepopulation of forms with the current budget values for edit.
 
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
-import Auth from "../../auth/auth";
+// import { NavLink } from "react-router-dom";
+// import Auth from "../../auth/auth";
 import Info from '../../api/Info';
 import Budgets from '../../api/Budgets';
 import Categories from '../../api/Categories';
 import Toasts from '../common/Toasts'
-import ConfirmationAlert from '../common/ConfirmationAlert'
+// import ConfirmationAlert from '../common/ConfirmationAlert'
 import { Redirect } from 'react-router-dom'
 import BudgetForm from './BudgetForm'
 
@@ -100,14 +100,14 @@ export class BudgetFormMain extends Component {
                     loading: true,
                     select_error: false
                 });
-                let response
+                // let response
                 if (this.state.edit_mode) {
-                    response = await Budgets.EditABudget(this.props.match.params.id,
+                    await Budgets.EditABudget(this.props.match.params.id,
                         budget_name, budget_max, budget_category_id);
                     // console.log("==response: ", response);
                     Toasts.success("Successfully edited budget")
                 } else {
-                    response = await Budgets.CreateABudget(budget_name, budget_max, budget_category_id);
+                    await Budgets.CreateABudget(budget_name, budget_max, budget_category_id);
                     // console.log("==response: ", response);
                     Toasts.success("Successfully created a budget")
                 }

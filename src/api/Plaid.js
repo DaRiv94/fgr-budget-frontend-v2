@@ -14,7 +14,7 @@ class Plaid{
             try{
                 let axiosConfig = getAxiosConfig()
                 let url = baseUrl + 'plaid/linktokencreate'
-                if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+                if(process.env.REACT_APP_PROJECT_ENV === 'sandbox'){
                     url +='?env=sandbox'
                 }
                 console.log("linktokencreate::url", url)
@@ -36,7 +36,7 @@ class Plaid{
                 let axiosConfig = getAxiosConfig()
                 
                 let url = baseUrl + 'plaid/connectbank'
-                if(process.env.REACT_APP_PROJECT_ENV == 'sandbox'){
+                if(process.env.REACT_APP_PROJECT_ENV === 'sandbox'){
                     url +='?env=sandbox'
                 }
                 console.log("connectbank::url", url)

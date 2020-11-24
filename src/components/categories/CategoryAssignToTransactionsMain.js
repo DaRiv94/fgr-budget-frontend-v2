@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 
-import Auth from "../../auth/auth";
+// import Auth from "../../auth/auth";
 import Categories from '../../api/Categories';
 import { Redirect } from 'react-router-dom'
 import Toasts from '../common/Toasts'

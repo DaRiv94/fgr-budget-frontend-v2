@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
-import Auth from "../../auth/auth";
-import { PlaidLink } from 'react-plaid-link';
+// import { NavLink } from "react-router-dom";
+// import Auth from "../../auth/auth";
+// import { PlaidLink } from 'react-plaid-link';
 // import './LinkReLinkPage.css'
-import Plaid from '../../api/Plaid';
+// import Plaid from '../../api/Plaid';
 import Info from '../../api/Info';
 import BudgetPage from './BudgetsPage'
 

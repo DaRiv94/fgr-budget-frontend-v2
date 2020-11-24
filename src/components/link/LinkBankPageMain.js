@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Toasts from '../common/Toasts'
 import 'react-toastify/dist/ReactToastify.css';
-import { NavLink } from "react-router-dom";
-import Auth from "../../auth/auth";
-import { PlaidLink } from 'react-plaid-link';
+// import { NavLink } from "react-router-dom";
+// import Auth from "../../auth/auth";
+// import { PlaidLink } from 'react-plaid-link';
 import './LinkReLinkPage.css'
 import Plaid from '../../api/Plaid';
 import Info from '../../api/Info';
@@ -56,7 +56,7 @@ export class LinkBankPageMain extends Component {
             banks: banksinfo.banks
         })
 
-        if (process.env.REACT_APP_PROJECT_ENV == 'sandbox') {
+        if (process.env.REACT_APP_PROJECT_ENV === 'sandbox') {
             this.setState({
                 is_sandbox: true
             });
