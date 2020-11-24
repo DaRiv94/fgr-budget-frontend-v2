@@ -6,3 +6,11 @@
 
 Notes to self, for redirecting this artcile may come in handle to pass data
 https://stackoverflow.com/questions/52064303/reactjs-pass-props-with-redirect-component
+
+
+----
+ENV
+```
+REACT_APP_PROJECT_ENV=sandbox
+REACT_APP_FGR_BUDGET_BACKEND_URL=http://localhost:4500/
+```
