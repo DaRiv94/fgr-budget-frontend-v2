@@ -26,7 +26,7 @@ export default function HelpPageAccordianCard(props) {
     return (
         <div className={classes.root}>
             {helpPageData.map((page) => {
-                return <Accordion>
+                return <Accordion key={page.header}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"

@@ -37,7 +37,7 @@ export default function AccountAccordianCard(props) {
             </AccordionSummary>
             <AccordionDetails>
             <ul>{account.monthly_net_spending.transactions.map(transaction=>{
-                    return <Typography key={transaction.name} className={gainLoss(transaction.value)} ><strong>{numeral(transaction.value).format('$0,0.00')}</strong> - {transaction.date} - {transaction.name}</Typography>
+                    return <Typography key={transaction.name} style={{color:gainLoss(transaction.value)}} ><strong>{numeral(transaction.value).format('$0,0.00')}</strong> - {transaction.date} - {transaction.name}</Typography>
                 })}</ul>
               {/* <Typography>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse

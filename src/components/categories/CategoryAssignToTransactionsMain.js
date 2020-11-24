@@ -78,13 +78,13 @@ export class CategoryAssignToTransactionsMain extends Component {
             this.setState({
                 loading: true
             });
-            let response
+            
             if (this.state.edit_mode) {
-                response = await Categories.EditACategory(this.props.match.params.id, this.state.category_name, this.state.category_color);
+                await Categories.EditACategory(this.props.match.params.id, this.state.category_name, this.state.category_color);
                 // console.log("==response: ", response);
                 Toasts.success("Successfully edited a category")
             } else {
-                response = await Categories.CreateACategory(this.state.category_name, this.state.category_color);
+                await Categories.CreateACategory(this.state.category_name, this.state.category_color);
                 // console.log("==response: ", response);
                 Toasts.success("Successfully created a category")
             }
@@ -168,7 +168,7 @@ export class CategoryAssignToTransactionsMain extends Component {
         
         if(found){
             try{
-                let removed_categorytransaction = await CategoryTransaction.DeleteACategoryTransaction(categorytransaction_id_for_removal) 
+                 await CategoryTransaction.DeleteACategoryTransaction(categorytransaction_id_for_removal) 
 
                 if (index > -1) {
                     newCategorytransactions.splice(index, 1);

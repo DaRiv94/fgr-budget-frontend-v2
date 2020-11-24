@@ -81,9 +81,9 @@ export class CategoryFormMain extends Component {
             this.setState({
                 loading: true
             });
-            let response
+            
             if(this.state.edit_mode){
-                response = await Categories.EditACategory(this.props.match.params.id, category_name,category_color);
+                 await Categories.EditACategory(this.props.match.params.id, category_name,category_color);
                 // console.log("==response: ", response);
                 Toasts.success("Successfully edited a category")
             }else{

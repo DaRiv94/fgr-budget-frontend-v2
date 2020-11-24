@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 // import FormHelperText from "@material-ui/core/FormHelperText";
 // import FormControl from "@material-ui/core/FormControl";
 // import Select from "@material-ui/core/Select";
-// import Typography from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography";
 import BankCard from './BankCard';
 import { PlaidLink } from 'react-plaid-link';
 
@@ -108,6 +108,17 @@ const LinkBankPage = (props) => {
                             Connect a bank account
                 </PlaidLink>
                     </Grid>
+                    <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
+                </Grid>
+                <Grid container item xs={12} spacing={2}>
+                    <Grid item sm={2} ></Grid>
+                    <Grid item xs={12} sm={8}>
+                        <Typography style={{fontWeight: 'bold'}} >
+                            Note: In this demo mode, dummy username and password accounts can be used with the following credentials Username: "user_good" Password: "pass_good"
+                            </Typography>
+                    </Grid>
+
+                    
                     <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
                 </Grid>
 
