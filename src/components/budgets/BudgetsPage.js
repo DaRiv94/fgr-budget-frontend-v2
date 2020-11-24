@@ -161,11 +161,11 @@ const BudgetPage = (props) => {
                     </Grid>
                     <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
                 </Grid>
-                {props.budgets.length == 0 ?
+                {props.budgets.length === 0 ?
                     <p>No budgets here</p> : props.budgetObjects.map((budgetObject) => {
-                        let odd_even_index = parseInt(props.budgetObjects.indexOf(budgetObject)) % 2 == 0 ? "even" : "odd"
+                        let odd_even_index = parseInt(props.budgetObjects.indexOf(budgetObject)) % 2 === 0 ? "even" : "odd"
         
-                        if(odd_even_index == 'even'){
+                        if(odd_even_index === 'even'){
                             console.log("IS EVEN")
                         }else{
                             console.log("IS ODD")

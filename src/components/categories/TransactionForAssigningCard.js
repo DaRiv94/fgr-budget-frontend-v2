@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 
 export default function TransactionForAssigningCard(props) {
     const classes = useStyles();
-    let { RemoveCategoryfromTransaction, assigned_categories, selected_category_id, categories, transaction, AddCategorytoTransaction } = props
+    let { RemoveCategoryfromTransaction, assigned_categories, selected_category_id, transaction, AddCategorytoTransaction } = props
 
     return (
         <Card className={classes.root} variant="outlined">
@@ -70,7 +70,7 @@ export default function TransactionForAssigningCard(props) {
                         })}
                     </Select>
                 </FormControl>
-                {assigned_categories.length != 0 && assigned_categories.map((category) => {
+                {assigned_categories.length !== 0 && assigned_categories.map((category) => {
                     return <Chip
                         key={category.id}
                         label={category.name}

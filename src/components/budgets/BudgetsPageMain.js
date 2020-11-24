@@ -44,7 +44,7 @@ export class BudgetsPageMain extends Component {
         let budgetObjects = []
         for (let i = 0; i < budgetinfo.budgets.length; i++) {
             for (let j = 0; j < budgetinfo.categories.length; j++) {
-                if (budgetinfo.categories[j].id == budgetinfo.budgets[i].category_id) {
+                if (budgetinfo.categories[j].id === budgetinfo.budgets[i].category_id) {
                     console.log(`budget ${budgetinfo.budgets[i].id} has category with id ${budgetinfo.categories[j].id} `)
                     let budget_object = { budget: budgetinfo.budgets[i], category: budgetinfo.categories[j] }
                     budgetObjects.push(budget_object)

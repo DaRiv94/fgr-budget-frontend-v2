@@ -138,7 +138,7 @@ export class BudgetFormMain extends Component {
             });
             // console.log(`DELETEING budget ${this.props.match.params.id} `)
 
-            let response = await Budgets.DeleteABudget(this.props.match.params.id);
+            await Budgets.DeleteABudget(this.props.match.params.id);
 
             Toasts.success("successfully deleted budget")
 

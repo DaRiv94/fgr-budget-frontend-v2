@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Info from '../../api/Info';
-import { NavLink } from 'react-router-dom';
-import AccountSummary from "./AccountSummary";
-import Dropdown from './Dropdown';
+// import { NavLink } from 'react-router-dom';
+// import AccountSummary from "./AccountSummary";
+// import Dropdown from './Dropdown';
 import './Summary.css';
 import SummaryPage from './SummaryPage'
 
@@ -63,7 +63,7 @@ export class Summary extends Component {
 
 
     render() {
-        let { loading, summary } = this.state;
+        let { summary } = this.state;
         console.log("SummaryMainPage summary:",summary)
         const options = [ 'January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         // const options = ['null', 'January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']

@@ -48,7 +48,7 @@ export class CategoryFormMain extends Component {
                     let budgetList=[]
                     for (let i = 0; i < budgetinfo.budgets.length; i++) {
                         
-                            if (categoryToEdit.id == budgetinfo.budgets[i].category_id) {
+                            if (categoryToEdit.id === budgetinfo.budgets[i].category_id) {
                                 budgetList.push(budgetinfo.budgets[i].name)
                             }
                         
@@ -87,7 +87,7 @@ export class CategoryFormMain extends Component {
                 // console.log("==response: ", response);
                 Toasts.success("Successfully edited a category")
             }else{
-                response = await Categories.CreateACategory(category_name,category_color);
+                 await Categories.CreateACategory(category_name,category_color);
                 // console.log("==response: ", response);
                 Toasts.success("Successfully created a category")
             }
@@ -134,7 +134,7 @@ export class CategoryFormMain extends Component {
             });
             // console.log(`DELETEING budget ${this.props.match.params.id} `)
 
-            let response = await Categories.DeleteACategory(this.props.match.params.id);
+             await Categories.DeleteACategory(this.props.match.params.id);
 
             Toasts.success("successfully deleted category")
 

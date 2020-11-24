@@ -58,12 +58,12 @@ const useStyles = makeStyles({
 
 const CategoryAssignToTransactions = (props) => {
     const classes = useStyles();
-    const [category_id_for_edit, setCategory_id_for_edit] = React.useState("9999");
+    // const [category_id_for_edit, setCategory_id_for_edit] = React.useState("9999");
     let { transactions, categorytransactions, selected_category_id,
         categories, RemoveCategoryfromTransaction, AddCategorytoTransaction } = props
-    const handleChange = (event) => {
-        setCategory_id_for_edit(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     setCategory_id_for_edit(event.target.value);
+    // };
 
     return (
         <div>
