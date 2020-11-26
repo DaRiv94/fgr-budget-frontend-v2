@@ -35,7 +35,7 @@ class Plaid{
             try{
                 let axiosConfig = getAxiosConfig()
                 
-                let url = baseUrl + 'plaid/connectbank'
+                let url = baseUrl + '/plaid/connectbank'
                 if(process.env.REACT_APP_PROJECT_ENV === 'sandbox'){
                     url +='?env=sandbox'
                 }

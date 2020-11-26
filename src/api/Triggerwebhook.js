@@ -13,7 +13,7 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.post(baseUrl + 'triggerwebhook',{item_id},  axiosConfig);
+                let response = await axios.post(baseUrl + '/triggerwebhook',{item_id},  axiosConfig);
                 if (response.data==null) resolve(null) ;
                 // console.log("response data",response.data);
                 resolve(response.data);

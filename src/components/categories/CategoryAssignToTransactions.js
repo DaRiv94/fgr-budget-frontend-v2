@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 // import FormHelperText from "@material-ui/core/FormHelperText";
 // import FormControl from "@material-ui/core/FormControl";
 // import Select from "@material-ui/core/Select";
-// import Typography from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography";
 // import TransactionForAssigning from './TransactionForAssigning'
 import TransactionForAssigningCard from './TransactionForAssigningCard'
 // import { NavLink } from "react-router-dom";
@@ -99,7 +99,21 @@ const CategoryAssignToTransactions = (props) => {
 
             </Grid>
             <div>
-                {transactions.length === 0 && <p>No transactions here</p>}
+                {transactions.length === 0 &&
+                    <Grid container item xs={12} spacing={2}>
+                        <Grid container item xs={12} spacing={2}>
+                            <Grid item sm={2} ></Grid>
+                            <Grid item xs={12} sm={8}>
+                                <Typography style={{ fontWeight: 'bold' }} >
+                                There are currently no transactions, go to the Banks page to connect a bank and add transactions
+                        </Typography>
+                            </Grid>
+
+
+                            <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
+                        </Grid>
+                    </Grid>
+                }
                 {transactions.length !== 0 && transactions.map(transaction => {
                     let assigned_categories = []
                     for (let i = 0; i < categorytransactions.length; i++) {

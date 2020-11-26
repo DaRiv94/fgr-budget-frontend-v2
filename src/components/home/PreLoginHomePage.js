@@ -109,6 +109,35 @@ const PreLoginHomePage = (props) => {
                         </Grid>
                         <Grid item sm={2}></Grid>
                     </Grid>
+                    {process.env.REACT_APP_FGR_CHECK_BACKEND_HEALTH == 'true' &&
+                        <Grid container item xs={12} spacing={2}>
+                            <Grid item sm={2}></Grid>
+                            <Grid item xs={12} sm={4}>
+                                {/* <input type="string" onChange={props.backendHealthOnChange} /> */}
+                                <TextField
+                                fullWidth
+                                // id="password"
+                                label="healthy check url"
+                                type="string"
+                                variant="outlined"
+                                // value={formik.values.password}
+                                onChange={props.backendHealthOnChange}
+                                // error={formik.touched.password && Boolean(formik.errors.password)}
+                                // helperText={formik.touched.password && formik.errors.password}
+                            />
+                            </Grid>
+
+                            <Grid item xs={12} sm={4}>
+                                <Button className={classes.registerBtn}
+                                    fullWidth
+                                    color="primary"
+                                    variant="contained"
+                                    onClick={props.backendHealthCheck}>
+                                    CHECK backend health
+                            </Button>
+                            </Grid>
+                            <Grid item sm={2}></Grid>
+                        </Grid>}
                 </Grid>
             </form>
         </div>

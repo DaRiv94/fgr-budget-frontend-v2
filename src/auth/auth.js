@@ -27,7 +27,7 @@ class Auth{
     
                 //This axios call goes to the backend which calls then auth service, 
                 //the auth service responses to thebackend which responss to frontend
-                let response = await axios.post(baseUrl+"auth/login", {email,password}, axiosConfig );
+                let response = await axios.post(baseUrl+"/auth/login", {email,password}, axiosConfig );
                     
                     sessionStorage.setItem('token', JSON.stringify(response.data.token));
                     this.isAuthenticated = true;
@@ -64,7 +64,7 @@ class Auth{
                 try{
                     let axiosConfig = getAxiosConfig()
     
-                    let response = await axios.post(baseUrl + 'auth', {}, axiosConfig);
+                    let response = await axios.post(baseUrl + '/auth', {}, axiosConfig);
                     if (response.data==null) resolve(null) ;
                     // console.log("getUserData response data",response.data);
                     if(response.status==='200'){

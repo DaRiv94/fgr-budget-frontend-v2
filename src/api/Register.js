@@ -17,7 +17,7 @@ class Register{
                 //This axios call goes to the backend which calls then auth service, 
                 //the auth service responses to thebackend which responss to frontend
                 //change this for backend route to just be /register
-                let response = await axios.post(baseUrl + 'auth/register', {email, password, password2}, axiosConfig);
+                let response = await axios.post(baseUrl + '/auth/register', {email, password, password2}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 resolve(response.data);
             }catch(e){

@@ -8,12 +8,36 @@ const baseUrl=process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
 
 class Info{
 
+    static getbackendhealth(api_url){
+        return new Promise(async (resolve,reject)=>{
+            console.log("getbackendhealth api_url: ",api_url)
+            // if(api_url ==null){
+            //     api_url = baseUrl + '/healthy'
+            // }
+            try{
+                let axiosConfig = {
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8',
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                };
+
+                let response = await axios.get(api_url, axiosConfig);
+                // let response = await axios.get(baseUrl + '/healthy', axiosConfig);
+                if (response.data==null) resolve(null) ;
+                resolve(response.data);
+            }catch(e){
+                reject(e)
+            }
+        })
+    }
+
     static getUserData(){
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/user', axiosConfig);
+                let response = await axios.get(baseUrl + '/info/user', axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("getUserData response data",response.data);
                 resolve(response.data);
@@ -29,7 +53,7 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/banks', axiosConfig);
+                let response = await axios.get(baseUrl + '/info/banks', axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("response data",response.data);
                 resolve(response.data);
@@ -45,7 +69,7 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'budget', axiosConfig);
+                let response = await axios.get(baseUrl + '/budget', axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("response data",response.data);  
                 resolve(response.data);
@@ -61,7 +85,7 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/transactions', axiosConfig);
+                let response = await axios.get(baseUrl + '/info/transactions', axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("response data",response.data);
                 resolve(response.data);
@@ -79,7 +103,7 @@ class Info{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'info/monthly-summary?month='+ month, axiosConfig);
+                let response = await axios.get(baseUrl + '/info/monthly-summary?month='+ month, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("response data",response.data);
                 resolve(response.data);

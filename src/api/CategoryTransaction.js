@@ -10,7 +10,7 @@ class CategoryTransaction{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'categorytransaction/', axiosConfig);
+                let response = await axios.get(baseUrl + '/categorytransaction/', axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("getAllCategoryTransaction response data",response.data);
                 resolve(response.data);
@@ -25,7 +25,7 @@ class CategoryTransaction{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.post(baseUrl + 'categorytransaction/', {category_id,transaction_id}, axiosConfig);
+                let response = await axios.post(baseUrl + '/categorytransaction/', {category_id,transaction_id}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("CreateACategoryTransaction response data",response.data);
                 resolve(response.data);
@@ -41,7 +41,7 @@ class CategoryTransaction{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                response = await axios.delete(baseUrl + 'categorytransaction/' + id, axiosConfig);
+                response = await axios.delete(baseUrl + '/categorytransaction/' + id, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("DeleteACategoryTransaction response data",response.data);
                 resolve(response.data);

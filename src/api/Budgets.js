@@ -2,6 +2,9 @@
 const axios = require('axios');
 const baseUrl=process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
 
+// if(process.env.REACT_APP_FGR_INGRESS_BACKEND=='true'){
+//     baseUrl='';
+// }
 
 class Budgets{
 
@@ -10,7 +13,7 @@ class Budgets{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.get(baseUrl + 'budget', axiosConfig);
+                let response = await axios.get(baseUrl + '/budget', axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("response data",response.data);  
                 resolve(response.data);
@@ -26,7 +29,7 @@ class Budgets{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.post(baseUrl + 'budget/', {name,budget_max,category_id}, axiosConfig);
+                let response = await axios.post(baseUrl + '/budget/', {name,budget_max,category_id}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("CreateABudget response data",response.data);
                 resolve(response.data);
@@ -42,7 +45,7 @@ class Budgets{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                response = await axios.get(baseUrl + 'budget/' + id, axiosConfig);
+                response = await axios.get(baseUrl + '/budget/' + id, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("GetABudget response data",response.data);
                 resolve(response.data);
@@ -58,7 +61,7 @@ class Budgets{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                response = await axios.delete(baseUrl + 'budget/' + id, axiosConfig);
+                response = await axios.delete(baseUrl + '/budget/' + id, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("GetABudget response data",response.data);
                 resolve(response.data);
@@ -73,7 +76,7 @@ class Budgets{
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.put(baseUrl + 'budget/' + id, {name,budget_max,category_id}, axiosConfig);
+                let response = await axios.put(baseUrl + '/budget/' + id, {name,budget_max,category_id}, axiosConfig);
                 if (response.data==null) resolve(null) ;
                 console.log("EditABudget response data",response.data);
                 resolve(response.data);
