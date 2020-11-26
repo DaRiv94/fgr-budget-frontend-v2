@@ -12,10 +12,10 @@ class Info{
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
-
+                // console.log(`baseUrl + '/triggerwebhook'", ${baseUrl + '/triggerwebhook'} `);
                 let response = await axios.post(baseUrl + '/triggerwebhook',{item_id},  axiosConfig);
                 if (response.data==null) resolve(null) ;
-                // console.log("response data",response.data);
+                // console.log("triggerwebhook response data",response.data);
                 resolve(response.data);
                 // resolve([]);
             }catch(e){

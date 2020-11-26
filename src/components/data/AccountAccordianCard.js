@@ -25,13 +25,13 @@ export default function AccountAccordianCard(props) {
   return (
     <div className={classes.root}>
         {accounts.map((account)=>{
-            return <Accordion>
+            return <Accordion key={account.id} >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography className={classes.heading} style={{fontWeight:'bold'}} >{account.name}</Typography>
+              <Typography className={classes.heading} style={{fontWeight:'bold'}} >{account.name}<span style={{fontWeight:'normal'}} > ({account.institution_name})</span>  </Typography>
               <Typography className={classes.heading}>Balance: {numeral(account.balence).format('$0,0.00')}</Typography>
               <Typography className={classes.heading} style={{color:gainLoss(account.monthly_net_spending.net)}}>Monthly Earn/Spend: {numeral(account.monthly_net_spending.net).format('$0,0.00')}</Typography>
             </AccordionSummary>

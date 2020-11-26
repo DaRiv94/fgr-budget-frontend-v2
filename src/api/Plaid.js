@@ -13,7 +13,7 @@ class Plaid{
         return new Promise(async (resolve,reject)=>{
             try{
                 let axiosConfig = getAxiosConfig()
-                let url = baseUrl + 'plaid/linktokencreate'
+                let url = baseUrl + '/plaid/linktokencreate'
                 if(process.env.REACT_APP_PROJECT_ENV === 'sandbox'){
                     url +='?env=sandbox'
                 }
