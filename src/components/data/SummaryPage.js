@@ -130,7 +130,7 @@ const SummaryPage = (props) => {
                         <div style={{textAlign:'center'}} >
                             <p>There are currently no accounts or transactions here</p>
                             <p>To connect your bank you can head over to the banks section!</p>
-                            <p>You will also need to manually trigger the webhook to create some transactions (This can in the banks section after you connect your bank)</p>
+                            <p>You will also need to manually trigger the webhook to create some transactions (This can be done in the banks section after you connect your bank)</p>
                         </div>
                     }
                     {summary.summary && summary.summary.length !== 0 && <AccountAccordianCard accounts={summary.summary} gainLoss={gainLoss} />}

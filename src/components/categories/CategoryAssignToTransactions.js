@@ -100,7 +100,7 @@ const CategoryAssignToTransactions = (props) => {
             </Grid>
             <div>
                 {transactions.length === 0 &&
-                    <Grid container item xs={12} spacing={2}>
+                  
                         <Grid container item xs={12} spacing={2}>
                             <Grid item sm={2} ></Grid>
                             <Grid item xs={12} sm={8}>
@@ -112,7 +112,7 @@ const CategoryAssignToTransactions = (props) => {
 
                             <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
                         </Grid>
-                    </Grid>
+                    
                 }
                 {transactions.length !== 0 && transactions.map(transaction => {
                     let assigned_categories = []
