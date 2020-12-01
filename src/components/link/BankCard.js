@@ -5,25 +5,17 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-// import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-    root: {
-        // minWidth: 275,
-    },
     title: {
         fontSize: 14,
     },
-
     registerBtn: {
         color: "#FFFFFF",
         '&:hover': {
             color: "#FFFFFF",
             textDecoration: "none"
         }
-    },
-    overBudget:{
-        color:"red"
     }
 });
 
@@ -32,13 +24,13 @@ export default function BankCard(props) {
     let { bank, manuallytriggerwebhook } = props
 
     return (
-        <Card className={classes.root} variant="outlined">
+        <Card variant="outlined">
             <CardContent>
                 <Typography className={classes.title} gutterBottom>
-                Bank
+                    Bank
                 </Typography>
-                <Typography  variant="h5" component="h2">
-                {bank.institution_name}
+                <Typography variant="h5" component="h2">
+                    {bank.institution_name}
                 </Typography>
             </CardContent>
             <CardActions>

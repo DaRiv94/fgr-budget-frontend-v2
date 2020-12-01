@@ -13,15 +13,9 @@ export class RegisterPageMain extends Component {
             registeredUser: false,
         }
         this.register = this.register.bind(this);
-
     }
 
-
     async register(email, password, password2) {
-
-        console.log("submitted via login email: ", email)
-        console.log("submitted via login password: ", password)
-        console.log("submitted via login password2: ", password2)
         try {
             this.setState({
                 loading: true
@@ -54,10 +48,8 @@ export class RegisterPageMain extends Component {
             }
         }
     }
-
-
+    
     render() {
-
         let { registeredUser, loading } = this.state
         if (registeredUser) {
             return <Redirect
@@ -68,13 +60,8 @@ export class RegisterPageMain extends Component {
                 {loading && <h2>Loading...</h2>}
                 <RegisterPage register={this.register} />
             </>
-
-
         }
     }
 }
-
-
-
 export default RegisterPageMain
 

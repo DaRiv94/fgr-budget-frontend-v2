@@ -1,5 +1,4 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -54,7 +53,6 @@ const PreLoginHomePage = (props) => {
 
             <h1 className={classes.header} >FGR Budget App </h1>
             <h3 className={classes.header} >(Kubernetes Demo)</h3>
-            
 
             <form onSubmit={formik.handleSubmit}>
                 <Grid className={classes.centerize} container spacing={2}>
@@ -111,22 +109,19 @@ const PreLoginHomePage = (props) => {
                         </Grid>
                         <Grid item sm={2}></Grid>
                     </Grid>
+                    
+                    {/* If REACT_APP_FGR_CHECK_BACKEND_HEALTH is true show input and button to check backend */}
                     {process.env.REACT_APP_FGR_CHECK_BACKEND_HEALTH == 'true' &&
                         <Grid container item xs={12} spacing={2}>
                             <Grid item sm={2}></Grid>
                             <Grid item xs={12} sm={4}>
-                                {/* <input type="string" onChange={props.backendHealthOnChange} /> */}
                                 <TextField
-                                fullWidth
-                                // id="password"
-                                label="healthy check url"
-                                type="string"
-                                variant="outlined"
-                                // value={formik.values.password}
-                                onChange={props.backendHealthOnChange}
-                                // error={formik.touched.password && Boolean(formik.errors.password)}
-                                // helperText={formik.touched.password && formik.errors.password}
-                            />
+                                    fullWidth
+                                    label="healthy check url"
+                                    type="string"
+                                    variant="outlined"
+                                    onChange={props.backendHealthOnChange}
+                                />
                             </Grid>
 
                             <Grid item xs={12} sm={4}>
@@ -140,6 +135,7 @@ const PreLoginHomePage = (props) => {
                             </Grid>
                             <Grid item sm={2}></Grid>
                         </Grid>}
+
                 </Grid>
             </form>
         </div>

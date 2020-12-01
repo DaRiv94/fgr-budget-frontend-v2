@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { NavLink } from "react-router-dom";
 import Auth from "../../auth/auth";
 import Info from '../../api/Info';
 import Toasts from '../common/Toasts'
@@ -14,7 +13,7 @@ export class HomePage extends Component {
             loading: false,
             user: {},
             had_notification: false,
-            api_url:""
+            api_url: ""
 
         }
         this.login = this.login.bind(this);
@@ -25,20 +24,17 @@ export class HomePage extends Component {
 
     async componentWillMount() {
 
-        console.log("process.env.REACT_APP_FGR_BUDGET_BACKEND_URL: ", process.env.REACT_APP_FGR_BUDGET_BACKEND_URL)
-        console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
-        console.log("process.env.REACT_APP_FGR_CHECK_BACKEND_HEALTH: ", process.env.REACT_APP_FGR_CHECK_BACKEND_HEALTH)
+        // console.log("process.env.REACT_APP_FGR_BUDGET_BACKEND_URL: ", process.env.REACT_APP_FGR_BUDGET_BACKEND_URL)
+        // console.log("process.env.REACT_APP_PROJECT_ENV: ", process.env.REACT_APP_PROJECT_ENV)
+        // console.log("process.env.REACT_APP_FGR_CHECK_BACKEND_HEALTH: ", process.env.REACT_APP_FGR_CHECK_BACKEND_HEALTH)
 
         let token = sessionStorage.getItem('token');
         if (token != null) {
-            // Auth.check_Authenticated().then((authenticated)=>{
-            //     Auth.isAuthenticated = authenticated
-            //     // console.log("HOME PAGE token check IN THEN ", Auth.isAuthenticated)
-            // })
+
             Auth.isAuthenticated = true
 
             let user = await Info.getUserData()
-            console.log("user: ", user)
+            // console.log("user: ", user)
             this.setState({
                 user: user.user
             });
@@ -53,12 +49,12 @@ export class HomePage extends Component {
             });
 
             let res = await Auth.login(email, password);
-            console.log("res:", res);
+            // console.log("res:", res);
             this.setState({
                 loading: false,
-                // authenticated:Auth.isAuthenticated
             });
             Toasts.success("Logged In!", 1.5)
+            Toasts.info("Auth Token will expire in one hour", 5)
         } catch (e) {
             if (typeof (e.Error) == "string") {
                 console.log("typeof(e.Error)=='string'")
@@ -72,7 +68,6 @@ export class HomePage extends Component {
                 } else {
                     Toasts.error(JSON.stringify(e))
                 }
-
                 this.setState({
                     loading: false
                 });
@@ -88,22 +83,22 @@ export class HomePage extends Component {
         Toasts.success("Logged Out!", 1.5)
     }
 
-    backendHealthOnChange(e){
-        this.setState({api_url:e.target.value})
+    backendHealthOnChange(e) {
+        this.setState({ api_url: e.target.value })
     }
 
-    async backendHealthCheck(){
-        console.log("CHecking backend health")
-        console.log("api_url:",this.state.api_url)
-        try{
+    async backendHealthCheck() {
+        console.log("Checking backend health")
+        console.log("api_url:", this.state.api_url)
+        try {
             let response = await Info.getbackendhealth(this.state.api_url)
             Toasts.success(response.data)
             console.log("success")
-        }catch(e){
-            console.log("error: ",e)
+        } catch (e) {
+            console.log("error: ", e)
             Toasts.error(e)
         }
-        
+
     }
 
 
@@ -115,42 +110,18 @@ export class HomePage extends Component {
 
         return (
             <div>
-                
+
                 {loading && <h2>Loading...</h2>}
 
                 {Auth.isAuthenticated ?
-                //Pass in logout, not_sandbox
                     <PostLoginHomePage logout={this.logout} user={this.state.user} />
-                    // <div>
-                    //     <h1>Home</h1>
-                    //     <h2>{this.state.user.email}</h2>
-                    //     <NavLink
-                    //         className="btn btn-primary"
-                    //         activeClassName="active"
-                    //         to="/summary"
-                    //     >Summary</NavLink>
-
-                    //     <button onClick={this.logout}>logout</button>
-                    //     <NavLink
-                    //         className="btn btn-primary"
-                    //         activeClassName="active"
-                    //         to="/link-bank"
-                    //     >linkrelink</NavLink>
-                    //     <NavLink
-                    //         className="btn btn-primary"
-                    //         activeClassName="active"
-                    //         to="/budgets"
-                    //     >budgets</NavLink>
-                    // </div>
                     :
-                    <><PreLoginHomePage login={this.login} 
-                    loading={loading} 
-                    backendHealthOnChange={this.backendHealthOnChange} 
-                    backendHealthCheck={this.backendHealthCheck} />
+                    <><PreLoginHomePage login={this.login}
+                        loading={loading}
+                        backendHealthOnChange={this.backendHealthOnChange}
+                        backendHealthCheck={this.backendHealthCheck} />
                     </>
-                    
                 }
-
             </div>
         )
     }
