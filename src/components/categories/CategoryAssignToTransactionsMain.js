@@ -1,18 +1,9 @@
-//On this page I will have the form for a budget.
-//This Component will be used when a user clicks the "create a budget" button
-//It will pass in the title "Create" param to help the component know its creation and post
-// it will pass "Update" when you select a budget to update and will pass the budget to be used for...
-//...the budget patch and prepopulation of forms with the current budget values for edit.
-
 import React, { Component } from 'react';
-
-// import Auth from "../../auth/auth";
 import Categories from '../../api/Categories';
 import { Redirect } from 'react-router-dom'
 import Toasts from '../common/Toasts'
 import Info from '../../api/Info';
 import CategoryTransaction from '../../api/CategoryTransaction';
-
 import CategoryAssignToTransactions from './CategoryAssignToTransactions'
 
 export class CategoryAssignToTransactionsMain extends Component {
@@ -38,17 +29,14 @@ export class CategoryAssignToTransactionsMain extends Component {
     }
 
     async componentWillMount() {
-        // let token = sessionStorage.getItem('token');
-        // if (token != null) {
-        //     Auth.isAuthenticated = true;
-        // }
+
             let transactions = {}
             let categorytransactions =[]
             try {
                 transactions = await Info.getAllTransactions()
-                console.log("transactions: ", transactions)
+                // console.log("transactions: ", transactions)
                 categorytransactions = await CategoryTransaction.getAllCategoryTransaction()
-                console.log("categorytransactions: ", categorytransactions)
+                // console.log("categorytransactions: ", categorytransactions)
                 this.setState({
                     transactions:transactions.transactions,
                     categorytransactions:categorytransactions.categorytransactions
@@ -63,7 +51,7 @@ export class CategoryAssignToTransactionsMain extends Component {
             }
             let user = await Info.getUserData()
             let categories = await Categories.getAllCategories()
-            console.log("categories: ", categories.categories)
+            // console.log("categories: ", categories.categories)
             this.setState({
                 user: user,
                 categories: categories.categories
@@ -81,11 +69,11 @@ export class CategoryAssignToTransactionsMain extends Component {
             
             if (this.state.edit_mode) {
                 await Categories.EditACategory(this.props.match.params.id, this.state.category_name, this.state.category_color);
-                // console.log("==response: ", response);
+                // console.log("response: ", response);
                 Toasts.success("Successfully edited a category")
             } else {
                 await Categories.CreateACategory(this.state.category_name, this.state.category_color);
-                // console.log("==response: ", response);
+                // console.log("response: ", response);
                 Toasts.success("Successfully created a category")
             }
             this.setState({
@@ -124,7 +112,7 @@ export class CategoryAssignToTransactionsMain extends Component {
     }
 
     async AddCategorytoTransaction(category_id, transaction_id){
-        console.log(`Will asign category ${category_id} to transaction ${transaction_id}`)
+        // console.log(`Will asign category ${category_id} to transaction ${transaction_id}`)
         let newCategorytransactions = this.state.categorytransactions
         let duplicate = false
         for(let i=0;i<newCategorytransactions.length;i++){
@@ -137,7 +125,7 @@ export class CategoryAssignToTransactionsMain extends Component {
             try {
                 
                 let categorytransaction = await CategoryTransaction.CreateACategoryTransaction(category_id,transaction_id)
-                console.log("categorytransaction: ", categorytransaction)
+                // console.log("categorytransaction: ", categorytransaction)
                 
                 newCategorytransactions.push(categorytransaction.categorytransaction)
                 this.setState({
@@ -145,7 +133,9 @@ export class CategoryAssignToTransactionsMain extends Component {
                 })
             } catch (e) {
                 console.log("e:", e)
-                Toasts.error(`probelm creating ccategroytransaction: e : ${e} `)
+                console.log("e.data:", e.data)
+
+                Toasts.error(`probelm creating categroytransaction: e : ${e} `)
             }
         }else{
             Toasts.error(`Category Already Added `)

@@ -15,16 +15,16 @@ export default function AlertDialog(props) {
 
   const handleClose = (takeAction) => {
     setOpen(false);
-    
-    if(takeAction){
-        props.confirmAction()
+
+    if (takeAction) {
+      props.confirmAction()
     }
   };
 
   return (
     <div>
       <Button className={props.className} variant="contained" color={props.buttonColor} onClick={handleClickOpen}>
-      {props.buttonTitle}
+        {props.buttonTitle}
       </Button>
       <Dialog
         open={open}
@@ -32,18 +32,18 @@ export default function AlertDialog(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{props.dialogTitle}{}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{props.dialogTitle}{ }</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          {props.dialogMessage}
+            {props.dialogMessage}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={()=>{handleClose(false)}} color="primary">
+          <Button onClick={() => { handleClose(false) }} color="primary">
             {props.dialogCancelActionTitle}
           </Button>
-          {props.allowConfirm && <Button onClick={()=>{handleClose(true)}} color="primary" autoFocus>
-          {props.dialogConfirmActionTitle}
+          {props.allowConfirm && <Button onClick={() => { handleClose(true) }} color="primary" autoFocus>
+            {props.dialogConfirmActionTitle}
           </Button>}
         </DialogActions>
       </Dialog>

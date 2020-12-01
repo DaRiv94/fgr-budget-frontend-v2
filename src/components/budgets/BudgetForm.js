@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-// import { Formik } from 'formik';
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -77,16 +76,6 @@ const RegisterPage = (props) => {
 
             {!edit_mode && <h1 className={classes.header} >Create a Budget</h1>}
             {edit_mode && <h1 className={classes.header} >Edit a Budget</h1>}
-            {/* <Formik
-                initialValues={{ budget_name: 'jared' }}
-                validationSchema={validationSchema}
-                onSubmit={(values, actions) => {
-                    setTimeout(() => {
-                        createOrEditBudget(values.budget_name, values.budget_max, budget_category_id)
-                        actions.setSubmitting(false);
-                    }, 1000);
-                }}
-            > */}
             <form onSubmit={formik.handleSubmit}>
                 <Grid className={classes.centerize} container spacing={2}>
                     <Grid container item xs={12} spacing={2}>
@@ -121,7 +110,6 @@ const RegisterPage = (props) => {
                                 label="Budget Name"
                                 variant="outlined"
                                 value={formik.values.budget_name}
-                                // value="Some value"
                                 onChange={formik.handleChange}
                                 error={formik.touched.budget_name && Boolean(formik.errors.budget_name)}
                                 helperText={formik.touched.budget_name && formik.errors.budget_name}
@@ -153,15 +141,8 @@ const RegisterPage = (props) => {
                                 variant="outlined"
                                 className={classes.formControl}
                             >
-                                {/* <select name="select_tag" onChange={this.budget_category_id_onChange} value={budget_category_id}>
-                                 <option value="">None</option>
-                                 {categories.map(category => {
-                                     return <option key={category.id} style={{ color: category.color }} value={category.id}>{category.name}</option>
-                                 })}
-                             </select> */}
                                 <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
                                 <Select
-                                    // className={classes.selectDropdown}
                                     labelId="demo-simple-select-outlined-label"
                                     id="demo-simple-select-outlined"
                                     value={budget_category_id}
@@ -169,7 +150,6 @@ const RegisterPage = (props) => {
                                     label="selected_category_id"
                                     error={select_error}
                                 >
-                                    {/* <MenuItem value="">{monthOptions[0]}</MenuItem> */}
                                     {categories.map(category => {
                                         return <MenuItem key={category.id} style={{ color: category.color }} value={category.id}>{category.name}</MenuItem>
                                     })}

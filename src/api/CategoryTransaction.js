@@ -22,15 +22,18 @@ class CategoryTransaction{
 
     static CreateACategoryTransaction(category_id,transaction_id){
         return new Promise(async (resolve,reject)=>{
+            let response
             try{
                 let axiosConfig = getAxiosConfig()
 
-                let response = await axios.post(baseUrl + '/categorytransaction/', {category_id,transaction_id}, axiosConfig);
+                response = await axios.post(baseUrl + '/categorytransaction/', {category_id,transaction_id}, axiosConfig);
                 if (response.data==null) resolve(null) ;
-                console.log("CreateACategoryTransaction response data",response.data);
+                // console.log("CreateACategoryTransaction response data",response.data);
                 resolve(response.data);
             }catch(e){
+                console.log("Error:",e)
                 reject(e)
+                
             }
         })
     }

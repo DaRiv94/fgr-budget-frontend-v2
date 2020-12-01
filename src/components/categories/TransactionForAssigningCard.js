@@ -1,23 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-// import { Link } from "react-router-dom";
 import numeral from "numeral";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-// import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles({
-    root: {
-        // minWidth: 275,
-    },
     formControl: {
         maxHeight: 50,
         margin: '0.5em',
@@ -25,13 +18,6 @@ const useStyles = makeStyles({
     },
     title: {
         fontSize: 14,
-    },
-    registerBtn: {
-        color: "#FFFFFF",
-        '&:hover': {
-            color: "#FFFFFF",
-            textDecoration: "none"
-        }
     },
     chip: {
         margin: '0.5em',
@@ -43,7 +29,7 @@ export default function TransactionForAssigningCard(props) {
     let { RemoveCategoryfromTransaction, assigned_categories, selected_category_id, transaction, AddCategorytoTransaction } = props
 
     return (
-        <Card className={classes.root} variant="outlined">
+        <Card variant="outlined">
             <CardContent>
                 <Typography className={classes.title} gutterBottom>
                     {transaction.date} - {transaction.name}
@@ -57,7 +43,6 @@ export default function TransactionForAssigningCard(props) {
                 >
                     <InputLabel id="demo-simple-select-outlined-label">Add Category</InputLabel>
                     <Select
-                        // className={classes.selectDropdown}
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         value={selected_category_id}
@@ -80,11 +65,6 @@ export default function TransactionForAssigningCard(props) {
                     />
                 })}
             </CardContent>
-            {/* <CardActions>
-                
-
-
-            </CardActions> */}
         </Card>
     );
 }

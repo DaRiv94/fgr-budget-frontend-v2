@@ -8,9 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-    root: {
-        // minWidth: 275,
-    },
     title: {
         fontSize: 14,
     },
@@ -32,7 +29,7 @@ export default function BudgetCard(props) {
     let { budgetObject } = props
 
     return (
-        <Card className={classes.root} variant="outlined">
+        <Card variant="outlined">
             <CardContent>
                 <Typography className={classes.title} style={{ color: budgetObject.category.color }} gutterBottom>
                     {budgetObject.budget.name} ({ budgetObject.category.name})

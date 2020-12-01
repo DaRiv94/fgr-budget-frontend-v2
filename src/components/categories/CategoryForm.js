@@ -1,8 +1,6 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-// import { Formik } from 'formik';
 import * as yup from "yup";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -11,10 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-// import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-// import Typography from "@material-ui/core/Typography";
 import ConfirmationAlert from '../common/ConfirmationAlert'
 
 const useStyles = makeStyles({
