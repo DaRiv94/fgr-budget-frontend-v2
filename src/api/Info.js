@@ -1,20 +1,14 @@
 /* eslint-disable import/no-named-as-default */
 const axios = require('axios');
 
-//This is the backend url
-// const baseUrl="http://localhost:4500/";
-const baseUrl=process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
-// const baseUrl="https://fgrbudgetapp.herokuapp.com/"
+const baseUrl = process.env.REACT_APP_FGR_BUDGET_BACKEND_URL;
 
-class Info{
+class Info {
 
-    static getbackendhealth(api_url){
-        return new Promise(async (resolve,reject)=>{
-            console.log("getbackendhealth api_url: ",api_url)
-            // if(api_url ==null){
-            //     api_url = baseUrl + '/healthy'
-            // }
-            try{
+    static getbackendhealth(api_url) {
+        return new Promise(async (resolve, reject) => {
+            console.log("getbackendhealth api_url: ", api_url)
+            try {
                 let axiosConfig = {
                     headers: {
                         'Content-Type': 'application/json;charset=UTF-8',
@@ -23,74 +17,65 @@ class Info{
                 };
 
                 let response = await axios.get(api_url, axiosConfig);
-                // let response = await axios.get(baseUrl + '/healthy', axiosConfig);
-                if (response.data==null) resolve(null) ;
+                if (response.data == null) resolve(null);
                 resolve(response.data);
-            }catch(e){
+            } catch (e) {
                 reject(e)
             }
         })
     }
 
-    static getUserData(){
-        return new Promise(async (resolve,reject)=>{
-            try{
+    static getUserData() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let axiosConfig = getAxiosConfig()
-
                 let response = await axios.get(baseUrl + '/info/user', axiosConfig);
-                if (response.data==null) resolve(null) ;
-                console.log("getUserData response data",response.data);
+                if (response.data == null) resolve(null);
+                // console.log("getUserData response data",response.data);
                 resolve(response.data);
-                // resolve([]);
-            }catch(e){
+            } catch (e) {
                 reject(e)
             }
         })
     }
 
-    static getAllBanks(){
-        return new Promise(async (resolve,reject)=>{
-            try{
+    static getAllBanks() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let axiosConfig = getAxiosConfig()
-
                 let response = await axios.get(baseUrl + '/info/banks', axiosConfig);
-                if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);
+                if (response.data == null) resolve(null);
+                // console.log("response data",response.data);
                 resolve(response.data);
-                // resolve([]);
-            }catch(e){
+            } catch (e) {
                 reject(e)
             }
         })
     }
 
-    static getBudgets(){
-        return new Promise(async (resolve,reject)=>{
-            try{
+    static getBudgets() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let axiosConfig = getAxiosConfig()
-
                 let response = await axios.get(baseUrl + '/budget', axiosConfig);
-                if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);  
+                if (response.data == null) resolve(null);
+                // console.log("response data",response.data);  
                 resolve(response.data);
-                // resolve([]);
-            }catch(e){
+            } catch (e) {
                 reject(e)
             }
         })
     }
 
-    static getAllTransactions(){
-        return new Promise(async (resolve,reject)=>{
-            try{
+    static getAllTransactions() {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let axiosConfig = getAxiosConfig()
-
                 let response = await axios.get(baseUrl + '/info/transactions', axiosConfig);
-                if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);
+                if (response.data == null) resolve(null);
+                // console.log("response data",response.data);
                 resolve(response.data);
-                resolve([]);
-            }catch(e){
+            } catch (e) {
                 reject(e)
             }
         })
@@ -98,17 +83,15 @@ class Info{
 
 
 
-    static getSummary(month=null){
-        return new Promise(async (resolve,reject)=>{
-            try{
+    static getSummary(month = null) {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let axiosConfig = getAxiosConfig()
-
-                let response = await axios.get(baseUrl + '/info/monthly-summary?month='+ month, axiosConfig);
-                if (response.data==null) resolve(null) ;
-                console.log("response data",response.data);
+                let response = await axios.get(baseUrl + '/info/monthly-summary?month=' + month, axiosConfig);
+                if (response.data == null) resolve(null);
+                // console.log("response data",response.data);
                 resolve(response.data);
-                resolve([]);
-            }catch(e){
+            } catch (e) {
                 reject(e)
             }
         })
@@ -116,18 +99,18 @@ class Info{
 
 }
 
-function getAxiosConfig(){
+function getAxiosConfig() {
     let jwtStringToken = sessionStorage.getItem('token');
-        let token = JSON.parse(jwtStringToken);
+    let token = JSON.parse(jwtStringToken);
 
-        let axiosConfig = {
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-                "Access-Control-Allow-Origin": "*",
-                "x-auth-token":token
-            }
-        };
-        return axiosConfig;
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+            "x-auth-token": token
+        }
+    };
+    return axiosConfig;
 }
 
 export default Info;
