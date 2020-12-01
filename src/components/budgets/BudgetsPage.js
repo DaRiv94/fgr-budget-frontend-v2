@@ -158,9 +158,9 @@ const BudgetPage = (props) => {
                         let odd_even_index = parseInt(props.budgetObjects.indexOf(budgetObject)) % 2 === 0 ? "even" : "odd"
 
                         if (odd_even_index === 'even') {
-                            console.log("IS EVEN")
+                            // console.log("IS EVEN")
                         } else {
-                            console.log("IS ODD")
+                            // console.log("IS ODD")
                         }
                         return <Grid key={budgetObject.budget.id} container item xs={12} spacing={2}>
 
