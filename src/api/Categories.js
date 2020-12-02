@@ -6,28 +6,30 @@ class Categories {
 
     static getAllCategories() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/category/', axiosConfig);
+                response = await axios.get(baseUrl + '/category/', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("getAllCategories response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
 
     static CreateACategory(name, color) {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.post(baseUrl + '/category/', { name, color }, axiosConfig);
+                response = await axios.post(baseUrl + '/category/', { name, color }, axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("CreateACategory response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
@@ -64,14 +66,15 @@ class Categories {
 
     static EditACategory(id, name, color) {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.patch(baseUrl + '/category/' + id, { name, color }, axiosConfig);
+                response = await axios.patch(baseUrl + '/category/' + id, { name, color }, axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("EditACategory response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }

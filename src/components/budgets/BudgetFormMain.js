@@ -96,11 +96,15 @@ export class BudgetFormMain extends Component {
                     redirect: true
                 });
             } catch (e) {
-                if (typeof (e.Error) == "string") {
+                console.log("e:",e)
+                if(e && e.Error && e.Error.response && e.Error.response && e.Error.response.data && e.Error.response.data.detail){
+                    Toasts.error(e.Error.response.data.detail)
+                }else if(typeof (e.Error) == "string"){
                     Toasts.error(e.Error)
-                } else {
+                }else{
                     Toasts.error(JSON.stringify(e))
                 }
+
                 this.setState({
                     loading: false
                 });

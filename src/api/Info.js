@@ -8,6 +8,7 @@ class Info {
     static getbackendhealth(api_url) {
         return new Promise(async (resolve, reject) => {
             console.log("getbackendhealth api_url: ", api_url)
+            let response = {}
             try {
                 let axiosConfig = {
                     headers: {
@@ -16,67 +17,71 @@ class Info {
                     }
                 };
 
-                let response = await axios.get(api_url, axiosConfig);
+                response = await axios.get(api_url, axiosConfig);
                 if (response.data == null) resolve(null);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
 
     static getUserData() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/info/user', axiosConfig);
+                response = await axios.get(baseUrl + '/info/user', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("getUserData response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
 
     static getAllBanks() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/info/banks', axiosConfig);
+                response = await axios.get(baseUrl + '/info/banks', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
 
     static getBudgets() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/budget', axiosConfig);
+                response = await axios.get(baseUrl + '/budget', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("response data",response.data);  
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
 
     static getAllTransactions() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/info/transactions', axiosConfig);
+                response = await axios.get(baseUrl + '/info/transactions', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
@@ -85,14 +90,15 @@ class Info {
 
     static getSummary(month = null) {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/info/monthly-summary?month=' + month, axiosConfig);
+                response = await axios.get(baseUrl + '/info/monthly-summary?month=' + month, axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }

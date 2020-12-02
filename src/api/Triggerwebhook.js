@@ -7,14 +7,15 @@ class Info {
 
     static triggerwebhook(item_id) {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.post(baseUrl + '/triggerwebhook', { item_id }, axiosConfig);
+                response = await axios.post(baseUrl + '/triggerwebhook', { item_id }, axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("triggerwebhook response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }

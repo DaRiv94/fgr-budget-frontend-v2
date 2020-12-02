@@ -6,14 +6,15 @@ class CategoryTransaction {
 
     static getAllCategoryTransaction() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/categorytransaction/', axiosConfig);
+                response = await axios.get(baseUrl + '/categorytransaction/', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("getAllCategoryTransaction response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
@@ -29,7 +30,7 @@ class CategoryTransaction {
                 resolve(response.data);
             } catch (e) {
                 console.log("Error:", e)
-                reject(e)
+                reject({ Error: e, response: response })
 
             }
         })

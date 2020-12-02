@@ -6,28 +6,30 @@ class Budgets {
 
     static getBudgets() {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.get(baseUrl + '/budget', axiosConfig);
+                response = await axios.get(baseUrl + '/budget', axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("response data",response.data);  
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
 
     static CreateABudget(name, budget_max, category_id) {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.post(baseUrl + '/budget/', { name, budget_max, category_id }, axiosConfig);
+                response = await axios.post(baseUrl + '/budget/', { name, budget_max, category_id }, axiosConfig);
                 if (response.data == null) resolve(null);
                 // console.log("CreateABudget response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                reject({ Error: e, response: response })
             }
         })
     }
@@ -64,14 +66,16 @@ class Budgets {
 
     static EditABudget(id, name, budget_max, category_id) {
         return new Promise(async (resolve, reject) => {
+            let response = {}
             try {
                 let axiosConfig = getAxiosConfig()
-                let response = await axios.put(baseUrl + '/budget/' + id, { name, budget_max, category_id }, axiosConfig);
+                response = await axios.put(baseUrl + '/budget/' + id, { name, budget_max, category_id }, axiosConfig);
                 if (response.data == null) resolve(null);
-                // console.log("EditABudget response data",response.data);
+                console.log("EditABudget response data",response.data);
                 resolve(response.data);
             } catch (e) {
-                reject(e)
+                
+                reject({ Error: e, response: response })
             }
         })
     }

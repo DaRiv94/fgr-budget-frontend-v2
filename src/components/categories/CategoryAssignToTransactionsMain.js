@@ -23,7 +23,6 @@ export class CategoryAssignToTransactionsMain extends Component {
         }
         this.category_name_onChange = this.category_name_onChange.bind(this);
         this.category_color_onChange = this.category_color_onChange.bind(this);
-        this.createOrEditCategory = this.createOrEditCategory.bind(this);
         this.RemoveCategoryfromTransaction =this.RemoveCategoryfromTransaction.bind(this);
         this.AddCategorytoTransaction = this.AddCategorytoTransaction.bind(this);
     }
@@ -61,37 +60,6 @@ export class CategoryAssignToTransactionsMain extends Component {
 
     }
 
-    async createOrEditCategory() {
-        try {
-            this.setState({
-                loading: true
-            });
-            
-            if (this.state.edit_mode) {
-                await Categories.EditACategory(this.props.match.params.id, this.state.category_name, this.state.category_color);
-                // console.log("response: ", response);
-                Toasts.success("Successfully edited a category")
-            } else {
-                await Categories.CreateACategory(this.state.category_name, this.state.category_color);
-                // console.log("response: ", response);
-                Toasts.success("Successfully created a category")
-            }
-            this.setState({
-                error: "",
-                loading: false,
-                redirect: true
-            });
-        } catch (e) {
-            if (typeof (e.Error) == "string") {
-                Toasts.error(e.Error)
-            } else {
-                Toasts.error(JSON.stringify(e))
-            }
-            this.setState({
-                loading: false
-            });
-        }
-    }
 
     category_name_onChange(e) {
         this.setState({
@@ -132,10 +100,14 @@ export class CategoryAssignToTransactionsMain extends Component {
                     categorytransactions:newCategorytransactions
                 })
             } catch (e) {
-                console.log("e:", e)
-                console.log("e.data:", e.data)
-
-                Toasts.error(`probelm creating categroytransaction: e : ${e} `)
+                console.log("e:",e)
+                if(e && e.Error && e.Error.response && e.Error.response && e.Error.response.data && e.Error.response.data.detail){
+                    Toasts.error(e.Error.response.data.detail)
+                }else if(typeof (e.Error) == "string"){
+                    Toasts.error(e.Error)
+                }else{
+                    Toasts.error(JSON.stringify(e))
+                }
             }
         }else{
             Toasts.error(`Category Already Added `)
