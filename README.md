@@ -1,17 +1,15 @@
 # FGR Budget Frontend
 
-[<img src="./src/components/common/images/FGRFINANCE.png" width="100" >](https://fgr-kubernetes-demo.northcentralus.cloudapp.azure.com)
+[<img src="./src/components/common/images/1000x1000_FGR_FINANCE.png" width="100" >](https://fgr-kubernetes-demo.northcentralus.cloudapp.azure.com)
 
 This is the frontend microservice used in the [Kubernetes Demo](https://frankieriviera.com/portfolio/kubernetes-demo) by [Frankie Riviera](https://frankieriviera.com)
 
-### Docker image
-The Docker image for this microservice can be found on [docker hub](https://hub.docker.com/repository/docker/dariv94/kubebud_frontend)
 
 # Develpment
 
 ## Getting Started
 
-### Env Vars
+### Environment Variables
 
 *NOTE:* when using create-react-app all env vars must start with **REACT_APP**  
 
