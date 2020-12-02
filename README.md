@@ -33,4 +33,4 @@ Once you have your .env file at the root of your project you can start up the fr
 ---
 ### NOTE TO SELF When Developing with Windows 10 Home
 Docker Toolbox does not play nice with docker-compose, so when I am developing with a windows 10 Home machine use the following cmd
-`docker run --rm -p 3000:3000 --name fgr-budget-frontend-v2_web_1 --network budget --env-file .env -e CHOKIDAR_USEPOLLING=true -v /app/node_modules  -v /c/Users/frank/OneDrive/Development/02_Projects_In_Production/0027_PersonalBudgetApp/fgr-budget-frontend-v2:/app frontendv2`
+`docker run --rm -p 3000:3000 --name fgr-budget-frontend-v2_web_1 --network budget --env-file .env -e CHOKIDAR_USEPOLLING=true -v /app/node_modules  -v /c/Users/frank/OneDrive/Development/02_Projects_In_Production/0027_PersonalBudgetApp/fgr-budget-frontend-v2:/app dariv94/kubebud_frontend`
