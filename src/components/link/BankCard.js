@@ -41,7 +41,7 @@ export default function BankCard(props) {
                     color="primary"
                     onClick={() => { manuallytriggerwebhook(bank.item_id) }}
                 >
-                    Get past 10 day transactions
+                    Get Transactions
             </Button>
 
             </CardActions>

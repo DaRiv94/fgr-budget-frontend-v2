@@ -188,11 +188,11 @@ return  <>
                         ACCOUNT:&nbsp;Plaid Checking.</h2>
                       <ul style={{"padding":"0","margin":"0 0 10px 0","list-style-type":"disc"}}>
                         <li style={{"margin":"0 0 10px 30px"}}><span style={{"font-weight":"bold"}}>DATE:</span>
-                          Sun Nov 08 2020 00:00:00 GMT+0000
+                          Sun Nov 07 2020 00:00:00 GMT+0000
                           (Coordinated Universal Time)</li>
                         <li style={{"margin":"0 0 10px 30px"}}><span style={{"font-weight":"bold"}}>NAME:</span>
-                          Starbucks</li>
-                        <li style={{"margin":"0 0 0 30px"}} className="list-item-last"><span style={{"font-weight":"bold"}}>AMOUNT:</span> 4.33</li>
+                        McDonald's</li>
+                        <li style={{"margin":"0 0 0 30px"}} className="list-item-last"><span style={{"font-weight":"bold"}}>AMOUNT:</span> 12.00</li>
                       </ul>
                     </td>
                   </tr>

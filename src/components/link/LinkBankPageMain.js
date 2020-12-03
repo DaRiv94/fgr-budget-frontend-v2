@@ -44,7 +44,8 @@ export class LinkBankPageMain extends Component {
     manuallytriggerwebhook = async (item_id) => {
         let response = await Triggerwebhook.triggerwebhook(item_id);
         // console.log("Clicked manuallytriggerwebhook response:", response);
-        Toasts.success(response.detail)
+        // Toasts.success(response.detail) // Webhook Received.
+        Toasts.success("Getting Transactions! Check your Account Summary to see your transactions.")
     }
 
     onSuccess = async (token, metadata) => {
