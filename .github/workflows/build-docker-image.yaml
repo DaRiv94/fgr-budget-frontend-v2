@@ -1,0 +1,48 @@
+name: Build Docker
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  setup-build-tag-push-docker-images:
+    name: Build, Tag, Push Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: get git sha 
+        run: |
+          echo "sha": $GITHUB_SHA
+
+    
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: create .env file
+        run: | 
+          cat >.env <<EOL
+          REACT_APP_PROJECT_ENV=sandbox
+          REACT_APP_FGR_BUDGET_BACKEND_URL=/api
+          EOL
+          cat .env
+
+      - name: Build, tag, and push images based on date, SHA, and latest
+        run: |
+          CURRENT_DATETIME=$(date "+%Y-%m-%d-%H-%M-%S")
+          docker build -t dariv94/kubebud_frontend:$CURRENT_DATETIME .
+          docker tag dariv94/kubebud_frontend:$CURRENT_DATETIME dariv94/kubebud_frontend:$GITHUB_SHA
+          docker tag dariv94/kubebud_frontend:$CURRENT_DATETIME dariv94/kubebud_frontend:latest
+          docker push dariv94/kubebud_frontend:$CURRENT_DATETIME 
+          docker push dariv94/kubebud_frontend:$GITHUB_SHA
+          docker push dariv94/kubebud_frontend:latest
+
+  

@@ -206,7 +206,7 @@ return  <>
       <table align="center" role="presentation" cellSpacing={0} cellPadding={0} border={0} width="100%" style={{"margin":"auto"}}>
         <tbody><tr>
             <td style={{"padding":"20px","font-family":"sans-serif","font-size":"12px","line-height":"15px","-webkit-text-align":"center","text-align":"center","color":"#3f51b5"}}>
-              <webversion>Go To <a style={{"color":"#3f51b5","-webkit-text-decoration":"underline","text-decoration":"underline","font-weight":"bold"}} href="https://fgr-kubernetes-demo.northcentralus.cloudapp.azure.com">FGR Budget App</a>
+              <webversion>Go To <a style={{"color":"#3f51b5","-webkit-text-decoration":"underline","text-decoration":"underline","font-weight":"bold"}} href="http://kubernetes-demo.frankieriviera.com">FGR Budget App</a>
               </webversion>
               <br /><br />
               <webversion>Go To <a style={{"color":"#3f51b5","-webkit-text-decoration":"underline","text-decoration":"underline","font-weight":"bold"}} href="https://frankieriviera.com">FrankieRiviera.com</a>
