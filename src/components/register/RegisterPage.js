@@ -97,7 +97,7 @@ const RegisterPage = (props) => {
                             <TextField
                                 fullWidth
                                 id="password2"
-                                label="Password2"
+                                label="Confirm Password"
                                 type="password"
                                 variant="outlined"
                                 value={formik.values.password2}
