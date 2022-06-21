@@ -52,7 +52,7 @@ const PreLoginHomePage = (props) => {
         <div>
 
             <h1 className={classes.header} >FGR Budget App </h1>
-            <h3 className={classes.header} >(Kubernetes Demo)</h3>
+            {/* <h3 className={classes.header} >(Kubernetes Demo)</h3> */}
 
             <form onSubmit={formik.handleSubmit}>
                 <Grid className={classes.centerize} container spacing={2}>

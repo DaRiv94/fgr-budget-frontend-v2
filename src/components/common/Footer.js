@@ -28,7 +28,7 @@ const Footer = () => {
                                 <Grid item sm={2} component={Box} display={{ xs: "none", sm: "block" }}></Grid>
                                 <Grid item xs={12} sm={8}>
 
-                                        <p className={classes.centerize} >Learn more about this <a href="https://frankieriviera.com/portfolio/kubernetes-demo" >kubernetes demo here</a></p>
+                                        {/* <p className={classes.centerize} >Learn more about this <a href="https://frankieriviera.com/portfolio/kubernetes-demo" >kubernetes demo here</a></p> */}
                                         <p className={classes.centerize} >Created by <a href="Https://frankieriviera.com" >frankieriviera.com <img className={classes.icon} src={FGR_icon} /></a></p>
 
                                 </Grid>
